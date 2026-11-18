@@ -27,6 +27,14 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm check
+      - name: Esquema Drizzle sem migração pendente
+        run: |
+          pnpm --filter @zooloo/db-schema db:generate
+          test -z "$(git status --porcelain packages/db-schema/migrations)" || {
+            echo "::error::O esquema Drizzle mudou sem migração. Rode 'pnpm --filter @zooloo/db-schema db:generate' e versione o resultado."
+            git status --porcelain packages/db-schema/migrations
+            exit 1
+          }
 
   mutation:
     name: Mutação do núcleo financeiro

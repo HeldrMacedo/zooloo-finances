@@ -2,3 +2,10 @@ packages:
   - apps/*
   - packages/*
   - tools/*
+
+# Scripts de instalação bloqueados por padrão (SEC-DEV-03). Liberar só com revisão humana.
+allowBuilds:
+  cpu-features: false
+  esbuild: false
+  protobufjs: false
+  ssh2: false

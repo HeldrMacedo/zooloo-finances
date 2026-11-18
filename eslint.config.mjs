@@ -93,6 +93,10 @@ export default tseslint.config(
   },
   {
     files: ['**/*.test.ts'],
-    rules: { '@typescript-eslint/no-non-null-assertion': 'off' },
+    rules: {
+      '@typescript-eslint/no-non-null-assertion': 'off',
+      // Testes leem migrações e fixtures do próprio repositório, por caminhos montados em constantes.
+      'security/detect-non-literal-fs-filename': 'off',
+    },
   },
 );

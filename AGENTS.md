@@ -8,6 +8,8 @@ Mapa, não manual (doc 12 §3). Detalhes ficam nos documentos apontados abaixo.
 - Teste primeiro em regras de domínio (Vitest + fast-check para invariantes).
 - Rode `pnpm check` (formatação, lint, arquitetura, tipos, testes com cobertura) antes de abrir PR.
 - No núcleo financeiro rode também `pnpm test:mutation` (Stryker, score ≥ 80%).
+- Testes do `@zooloo/db-schema` sobem PostgreSQL com Testcontainers: Docker precisa estar rodando.
+- Mudou tabela? `pnpm --filter @zooloo/db-schema db:generate` e versione as migrações.
 - `pnpm dev:worktree` (ambiente isolado por worktree) ainda não existe; ver o plano da Fase 0.
 - Escale para uma pessoa nos casos de `docs/design-docs/core-beliefs.md#escalar`.
 

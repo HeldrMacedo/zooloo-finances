@@ -51,6 +51,11 @@ export function parseLocalDate(value: string): LocalDate {
   return localDate(Number(match[1]), Number(match[2]), Number(match[3]));
 }
 
+export function toIsoDate(date: LocalDate): string {
+  const pad = (value: number, width: number): string => String(value).padStart(width, '0');
+  return `${pad(date.year, 4)}-${pad(date.month, 2)}-${pad(date.day, 2)}`;
+}
+
 /** Cria a data no mês pedido levando o dia ao último dia quando o mês é curto (RN-LAN-14). */
 export function withDayClamped(year: number, month: number, day: number): LocalDate {
   return localDate(year, month, Math.min(day, daysInMonth(year, month)));

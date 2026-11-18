@@ -4,6 +4,7 @@
 /eslint.config.mjs           @HeldrMacedo
 /.dependency-cruiser.cjs     @HeldrMacedo
 **/vitest.config.ts          @HeldrMacedo
+/tools/vitest-config/        @HeldrMacedo
 **/stryker.config.json       @HeldrMacedo
 /packages/domain/            @HeldrMacedo
 /packages/sync-core/         @HeldrMacedo

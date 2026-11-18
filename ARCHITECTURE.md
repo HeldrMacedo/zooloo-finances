@@ -10,15 +10,20 @@ Fonte normativa: `docs/product-specs/09-arquitetura-e-stack.md` (stack) e `docs/
 | `packages/ui-tokens` | ativo | Tokens da marca (doc 13 §6), temas claro/escuro, teste de contraste |
 | `packages/sync-core` | planejado | Outbox, pull/push, HLC, merge por campo |
 | `packages/db-schema` | planejado | Drizzle: esquema SQLite local + PostgreSQL |
-| `packages/validation` | planejado | Schemas Zod compartilhados |
+| `packages/validation` | ativo | Schemas Zod da fronteira: primitivos (`IdSchema` UUIDv7, `LocalDateSchema`, `MoneySchema`, cursor), categorias, problem+json (RFC 9457) |
 | `packages/security` | ativo | Logger estruturado com mascaramento (SEC-LOG-01); criptografia e sanitização planejadas |
 | `packages/api-client` | planejado | Cliente tipado gerado do OpenAPI |
-| `packages/i18n` | planejado | Textos pt-BR |
+| `packages/i18n` | ativo | Catálogo pt-BR tipado com plural, `formatMoney`/`parseMoneyInput` sem float, `formatLocalDate` |
 | `apps/api` | planejado | NestJS + Fastify (ADR-0002): REST `/api/v1`, sync, SSE/WebSocket |
 | `apps/workers` | planejado | BullMQ: recorrências, e-mails, jobs LGPD |
 | `apps/web-app` | planejado | Vite + React PWA em `/app` |
 | `apps/site` | planejado | Next.js: landing, termos, privacidade |
 | `apps/mobile`, `apps/kids`, `apps/mcp` | reservado | Fases 2, 4 e 5 |
+| `tools/vitest-config` | ativo | Configuração compartilhada do Vitest e metas de cobertura por camada |
+
+## Resolução de pacotes internos
+
+Em dev e teste os pacotes são lidos de `src/` pela condição de export `@zooloo/source`; o build usa `dist/` (ADR-0004).
 
 ## Regras de dependência (verificadas no CI)
 

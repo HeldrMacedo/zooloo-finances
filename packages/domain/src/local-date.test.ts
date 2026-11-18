@@ -8,6 +8,7 @@ import {
   InvalidLocalDateError,
   localDate,
   parseLocalDate,
+  toIsoDate,
   withDayClamped,
 } from './local-date.js';
 
@@ -22,6 +23,19 @@ const anyDate = fc
 describe('local-date', () => {
   it('converte de e para ISO (YYYY-MM-DD)', () => {
     expect(parseLocalDate('2026-11-18')).toEqual({ year: 2026, month: 11, day: 18 });
+  });
+
+  it('serializa em ISO com zeros à esquerda', () => {
+    expect(toIsoDate(localDate(2026, 1, 5))).toBe('2026-01-05');
+    expect(toIsoDate(localDate(987, 12, 31))).toBe('0987-12-31');
+  });
+
+  it('propriedade: parseLocalDate(toIsoDate(d)) = d', () => {
+    fc.assert(
+      fc.property(anyDate, (date) => {
+        expect(parseLocalDate(toIsoDate(date))).toEqual(date);
+      }),
+    );
   });
 
   it.each(['2026-02-30', '2026-13-01', '2026-00-10', '26-01-01', '2026-1-01', ''])(

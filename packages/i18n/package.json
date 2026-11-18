@@ -1,0 +1,30 @@
+{
+  "name": "@zooloo/i18n",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Textos pt-BR e formatação de dinheiro e datas.",
+  "type": "module",
+  "exports": {
+    ".": {
+      "@zooloo/source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage"
+  },
+  "devDependencies": {
+    "@vitest/coverage-v8": "5.1.0",
+    "@zooloo/vitest-config": "workspace:*",
+    "fast-check": "4.10.2",
+    "typescript": "6.0.3",
+    "vitest": "5.1.0"
+  },
+  "dependencies": {
+    "@zooloo/domain": "workspace:*"
+  }
+}

@@ -12,6 +12,11 @@
     },
     "./testing": {
       "@zooloo/source": "./src/testing/postgres.ts"
+    },
+    "./migrate": {
+      "@zooloo/source": "./src/pg/migrate.ts",
+      "types": "./dist/pg/migrate.d.ts",
+      "default": "./dist/pg/migrate.js"
     }
   },
   "scripts": {
@@ -27,11 +32,11 @@
     "@vitest/coverage-v8": "5.1.0",
     "@zooloo/vitest-config": "workspace:*",
     "drizzle-kit": "0.31.11",
-    "pg": "8.23.1",
     "typescript": "6.0.3",
     "vitest": "5.1.0"
   },
   "dependencies": {
-    "drizzle-orm": "0.45.4"
+    "drizzle-orm": "0.45.4",
+    "pg": "8.23.1"
   }
 }

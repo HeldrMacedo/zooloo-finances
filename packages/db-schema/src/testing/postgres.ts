@@ -1,11 +1,8 @@
 import { PostgreSqlContainer, type StartedPostgreSqlContainer } from '@testcontainers/postgresql';
-import { drizzle } from 'drizzle-orm/node-postgres';
-import { migrate } from 'drizzle-orm/node-postgres/migrator';
-import { fileURLToPath } from 'node:url';
 import pg from 'pg';
+import { migratePostgres } from '../pg/migrate.js';
 
 export const POSTGRES_IMAGE = 'postgres:17-alpine';
-const MIGRATIONS = fileURLToPath(new URL('../../migrations/pg', import.meta.url));
 
 export interface TestDatabase {
   readonly container: StartedPostgreSqlContainer;
@@ -38,7 +35,7 @@ export async function startTestDatabase(): Promise<TestDatabase> {
   const owner = new pg.Pool({ connectionString: uri('zooloo_owner', 'owner'), max: 2 });
   const app = new pg.Pool({ connectionString: uri('zooloo_app', 'app'), max: 4 });
 
-  await migrate(drizzle(owner), { migrationsFolder: MIGRATIONS });
+  await migratePostgres(uri('zooloo_owner', 'owner'));
 
   return {
     container,

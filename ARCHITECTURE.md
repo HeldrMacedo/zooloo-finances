@@ -19,6 +19,7 @@ Fonte normativa: `docs/product-specs/09-arquitetura-e-stack.md` (stack) e `docs/
 | `apps/web-app` | planejado | Vite + React PWA em `/app` |
 | `apps/site` | planejado | Next.js: landing, termos, privacidade |
 | `apps/mobile`, `apps/kids`, `apps/mcp` | reservado | Fases 2, 4 e 5 |
+| `tools/dev-worktree` | ativo | `pnpm dev:worktree`: Docker Compose por worktree (`infra/dev`), migrações, seed sintético, `.env.worktree`, API em watch |
 | `tools/vitest-config` | ativo | Configuração compartilhada do Vitest e metas de cobertura por camada |
 
 ## Resolução de pacotes internos

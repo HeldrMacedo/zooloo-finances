@@ -1,0 +1,26 @@
+{
+  "name": "@zooloo/dev-worktree",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Ambiente local isolado por git worktree: PostgreSQL, Redis, migrações, seed sintético e API (doc 12 §4).",
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage"
+  },
+  "dependencies": {
+    "@zooloo/db-schema": "workspace:*",
+    "pg": "8.23.1"
+  },
+  "devDependencies": {
+    "@types/node": "26.6.6",
+    "@types/pg": "8.23.1",
+    "@vitest/coverage-v8": "5.1.0",
+    "@zooloo/validation": "workspace:*",
+    "@zooloo/vitest-config": "workspace:*",
+    "typescript": "6.0.3",
+    "vitest": "5.1.0"
+  }
+}

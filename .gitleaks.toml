@@ -1,0 +1,7 @@
+# Varredura de segredos (SEC-INF-03). Só o ambiente local por worktree tem senhas fixas, de uso local.
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Senhas do ambiente local de desenvolvimento (infra/dev), sem valor fora da máquina"
+paths = ['''^infra/dev/''', '''^tools/dev-worktree/''']

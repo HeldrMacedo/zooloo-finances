@@ -16,7 +16,8 @@
     "depcruise": "depcruise apps packages --config .dependency-cruiser.cjs",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "check": "pnpm format:check && pnpm lint && pnpm depcruise && pnpm typecheck && pnpm test:coverage"
+    "check": "pnpm format:check && pnpm lint && pnpm depcruise && pnpm typecheck && pnpm test:coverage",
+    "dev:worktree": "turbo run build --filter=@zooloo/dev-worktree... --filter=@zooloo/api... --output-logs=errors-only && node tools/dev-worktree/dist/cli.js"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

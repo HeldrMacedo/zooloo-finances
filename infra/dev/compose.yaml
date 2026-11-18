@@ -1,0 +1,36 @@
+# Ambiente local por git worktree (doc 12 §4). Não use diretamente: rode `pnpm dev:worktree`,
+# que define o nome do projeto e as portas a partir do nome da worktree.
+# Só dados sintéticos; senhas abaixo valem apenas para este ambiente local (doc 12 §9).
+name: ${ZL_PROJECT:?rode via pnpm dev:worktree}
+
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: dev-only-postgres
+      POSTGRES_DB: zooloo
+    ports:
+      - 127.0.0.1:${ZL_POSTGRES_PORT:?}:5432
+    volumes:
+      - postgres:/var/lib/postgresql/data
+      - ./postgres-init.sql:/docker-entrypoint-initdb.d/00-roles.sql:ro
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres -d zooloo']
+      interval: 2s
+      timeout: 3s
+      retries: 30
+
+  redis:
+    image: redis:7-alpine
+    command: ['redis-server', '--save', '', '--appendonly', 'no']
+    ports:
+      - 127.0.0.1:${ZL_REDIS_PORT:?}:6379
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 2s
+      timeout: 3s
+      retries: 30
+
+volumes:
+  postgres:

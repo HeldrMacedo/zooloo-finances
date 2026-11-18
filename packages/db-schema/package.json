@@ -9,6 +9,9 @@
       "@zooloo/source": "./src/index.ts",
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
+    },
+    "./testing": {
+      "@zooloo/source": "./src/testing/postgres.ts"
     }
   },
   "scripts": {

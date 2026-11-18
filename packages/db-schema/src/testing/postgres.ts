@@ -13,6 +13,8 @@ export interface TestDatabase {
   readonly owner: pg.Pool;
   /** Papel da aplicação, sujeito à RLS. */
   readonly app: pg.Pool;
+  /** URI de conexão do papel da aplicação, para quem cria o próprio pool (ex.: a API). */
+  readonly appConnectionUri: string;
   stop(): Promise<void>;
 }
 
@@ -42,6 +44,7 @@ export async function startTestDatabase(): Promise<TestDatabase> {
     container,
     owner,
     app,
+    appConnectionUri: uri('zooloo_app', 'app'),
     async stop() {
       await Promise.all([owner.end(), app.end()]);
       await container.stop();

@@ -14,7 +14,7 @@ Fonte normativa: `docs/product-specs/09-arquitetura-e-stack.md` (stack) e `docs/
 | `packages/security` | ativo | Logger estruturado com mascaramento (SEC-LOG-01); criptografia e sanitização planejadas |
 | `packages/api-client` | planejado | Cliente tipado gerado do OpenAPI |
 | `packages/i18n` | ativo | Catálogo pt-BR tipado com plural, `formatMoney`/`parseMoneyInput` sem float, `formatLocalDate` |
-| `apps/api` | planejado | NestJS + Fastify (ADR-0002): REST `/api/v1`, sync, SSE/WebSocket |
+| `apps/api` | ativo | NestJS 12 + Fastify (ADR-0002): `/api/v1`, health, OpenAPI dos schemas Zod, problem+json, helmet; sync e SSE planejados |
 | `apps/workers` | planejado | BullMQ: recorrências, e-mails, jobs LGPD |
 | `apps/web-app` | planejado | Vite + React PWA em `/app` |
 | `apps/site` | planejado | Next.js: landing, termos, privacidade |
@@ -30,6 +30,13 @@ Em dev e teste os pacotes são lidos de `src/` pela condição de export `@zoolo
 - `packages/domain` não importa nada fora de si (ESLint `no-restricted-imports` + dependency-cruiser `domain-sem-io`).
 - Apps não importam outros apps; pacotes não importam apps; sem ciclos (`.dependency-cruiser.cjs`).
 - Dentro de cada domínio de negócio: `Types → Config → Repo → Service → Runtime → UI`, com `Providers` como única porta para o transversal (doc 12 §5.1). As regras por camada entram junto com o primeiro app.
+
+## API (`apps/api`)
+
+- Camadas no app: `config/` (env validado com Zod), `providers/` (banco, logging: única porta para o transversal), `runtime/http/` (filtro problem+json, validação), `modules/<domínio>/` (controllers e services).
+- Validação na fronteira: `@Body({ schema: XxxSchema })` com schemas de `@zooloo/validation`; o pipe global (`StandardSchemaValidationPipe`) responde 422 em problem+json.
+- Acesso a dados do usuário só por `DatabaseService.withUser(userId, tx => …)`, que abre a transação no contexto da RLS.
+- OpenAPI gerado dos controllers e dos schemas Zod (`standardSchema`). Mudou a API? `pnpm build && pnpm --filter @zooloo/api openapi` e versione `apps/api/openapi.json`; o CI falha se divergir.
 
 ## Banco de dados
 

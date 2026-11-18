@@ -35,6 +35,14 @@ jobs:
             git status --porcelain packages/db-schema/migrations
             exit 1
           }
+      - name: OpenAPI versionado igual ao gerado
+        run: |
+          pnpm build
+          pnpm --filter @zooloo/api openapi
+          git diff --exit-code apps/api/openapi.json || {
+            echo "::error::A API mudou e o openapi.json não. Rode 'pnpm build && pnpm --filter @zooloo/api openapi' e versione o resultado."
+            exit 1
+          }
 
   mutation:
     name: Mutação do núcleo financeiro

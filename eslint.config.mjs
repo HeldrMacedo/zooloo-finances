@@ -30,6 +30,8 @@ export default tseslint.config(
     rules: {
       'max-lines': ['error', { max: 400, skipBlankLines: true, skipComments: true }],
       '@typescript-eslint/no-explicit-any': 'error',
+      // Módulos e controllers do NestJS são classes vazias com decorator.
+      '@typescript-eslint/no-extraneous-class': ['error', { allowWithDecorator: true }],
       '@typescript-eslint/ban-ts-comment': [
         'error',
         { 'ts-ignore': true, 'ts-expect-error': 'allow-with-description' },

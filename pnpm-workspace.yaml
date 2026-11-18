@@ -5,6 +5,8 @@ packages:
 
 # Scripts de instalação bloqueados por padrão (SEC-DEV-03). Liberar só com revisão humana.
 allowBuilds:
+  # Telemetria de instalação trazida pelo swagger-ui-dist.
+  '@scarf/scarf': false
   cpu-features: false
   esbuild: false
   protobufjs: false

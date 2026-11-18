@@ -1,0 +1,43 @@
+{
+  "name": "@zooloo/api",
+  "version": "0.0.0",
+  "private": true,
+  "description": "API REST /api/v1 (NestJS + Fastify, ADR-0002).",
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "start": "node dist/main.js",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "openapi": "node dist/openapi-cli.js && prettier --write openapi.json"
+  },
+  "dependencies": {
+    "@fastify/helmet": "13.2.0",
+    "@fastify/static": "10.1.11",
+    "@nestjs/common": "12.5.1",
+    "@nestjs/core": "12.5.1",
+    "@nestjs/platform-fastify": "12.5.1",
+    "@nestjs/swagger": "12.1.2",
+    "@zooloo/db-schema": "workspace:*",
+    "@zooloo/security": "workspace:*",
+    "@zooloo/validation": "workspace:*",
+    "drizzle-orm": "0.45.4",
+    "fastify": "5.12.8",
+    "pg": "8.23.1",
+    "reflect-metadata": "0.2.2",
+    "rxjs": "7.8.2",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "prettier": "3.10.1",
+    "@nestjs/testing": "12.5.1",
+    "@standard-schema/spec": "1.1.0",
+    "@types/node": "26.6.6",
+    "@types/pg": "8.23.1",
+    "@vitest/coverage-v8": "5.1.0",
+    "@zooloo/vitest-config": "workspace:*",
+    "typescript": "6.0.3",
+    "vitest": "5.1.0"
+  }
+}

@@ -8,9 +8,9 @@ import { seedDatabase } from './seed.js';
 import { portsFor, projectName, slugify } from './worktree.js';
 
 /**
- * `pnpm dev:worktree [up|api|down|status]` (doc 12 §4). Sem argumento: `up` e depois `api`.
+ * `pnpm dev:worktree [up|api|web|down|status]` (doc 12 §4). Sem argumento: `up`, `api` e `web`.
  * Sobe PostgreSQL e Redis isolados por worktree, aplica migrações, grava o seed sintético, gera
- * `.env.worktree` e roda a API em modo watch.
+ * `.env.worktree` e roda a API e o web-app em modo watch.
  */
 const print = (text: string): void => {
   process.stdout.write(`${text}\n`);
@@ -55,6 +55,7 @@ function status(): void {
   print(`redis      127.0.0.1:${ports.redis}`);
   print(`api        http://127.0.0.1:${ports.api}/api/v1/health`);
   print(`openapi    http://127.0.0.1:${ports.api}/api/v1/docs`);
+  print(`web-app    http://127.0.0.1:${ports.web}/app/`);
   print(`env        ${envFile}`);
 }
 
@@ -68,6 +69,16 @@ async function up(): Promise<void> {
   print(`migrações aplicadas; seed sintético com ${users} usuários.`);
   status();
 }
+
+/** Processos em watch desta sessão, encerrados juntos no Ctrl+C. */
+const children: ReturnType<typeof spawn>[] = [];
+const stopAll = (): void => {
+  for (const child of children) {
+    child.kill();
+  }
+};
+process.once('SIGINT', stopAll);
+process.once('SIGTERM', stopAll);
 
 /** Recompila a API a cada mudança (tsc --watch) e reinicia o processo (node --watch). */
 function api(): void {
@@ -88,12 +99,22 @@ function api(): void {
     ['--env-file', envFile, '--watch-path', 'apps/api/dist', 'apps/api/dist/main.js'],
     options,
   );
-  const stop = (): void => {
-    tsc.kill();
-    server.kill();
-  };
-  process.once('SIGINT', stop);
-  process.once('SIGTERM', stop);
+  children.push(tsc, server);
+}
+
+/** Vite do web-app na porta da worktree, com proxy de `/api` para a API desta worktree. */
+function web(): void {
+  const vite = spawn(
+    process.execPath,
+    [join(root, 'apps', 'web-app', 'node_modules', 'vite', 'bin', 'vite.js')],
+    {
+      stdio: 'inherit',
+      cwd: join(root, 'apps', 'web-app'),
+      env: { ...childEnv, ZL_WEB_PORT: String(ports.web), PORT: String(ports.api) },
+      shell: false,
+    },
+  );
+  children.push(vite);
 }
 
 const command = process.argv[2] ?? 'dev';
@@ -103,6 +124,9 @@ switch (command) {
     break;
   case 'api':
     api();
+    break;
+  case 'web':
+    web();
     break;
   case 'down':
     // Remove contêineres e volumes: o banco desta worktree é descartável (só dados sintéticos).
@@ -114,7 +138,8 @@ switch (command) {
   case 'dev':
     await up();
     api();
+    web();
     break;
   default:
-    throw new Error(`Comando desconhecido: ${command}. Use up, api, down ou status.`);
+    throw new Error(`Comando desconhecido: ${command}. Use up, api, web, down ou status.`);
 }

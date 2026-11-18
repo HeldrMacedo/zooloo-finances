@@ -1,0 +1,27 @@
+.card {
+  display: grid;
+  gap: var(--zl-space-4);
+  align-content: start;
+  padding: var(--zl-space-6);
+  border-radius: var(--zl-radius-lg);
+  background: var(--zl-surface);
+  box-shadow: var(--zl-shadow);
+}
+
+.highlight {
+  background: var(--zl-highlight);
+  box-shadow: none;
+}
+
+.header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--zl-space-4);
+}
+
+.title {
+  font-family: var(--zl-font-ui);
+  font-size: var(--zl-text-md);
+  font-weight: 600;
+}

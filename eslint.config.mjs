@@ -1,6 +1,8 @@
 // Linters de "gosto" (doc 12 §5.2). Cada mensagem diz como corrigir e aponta o doc de origem.
 import js from '@eslint/js';
 import globals from 'globals';
+import jsxA11y from 'eslint-plugin-jsx-a11y';
+import reactHooks from 'eslint-plugin-react-hooks';
 import security from 'eslint-plugin-security';
 import tseslint from 'typescript-eslint';
 
@@ -59,6 +61,20 @@ export default tseslint.config(
     },
   },
   {
+    // React no web-app: regras de hooks e acessibilidade (RNF-UX-01).
+    files: ['apps/web-app/src/**/*.tsx'],
+    ...reactHooks.configs.flat.recommended,
+  },
+  {
+    files: ['apps/web-app/src/**/*.tsx'],
+    ...jsxA11y.flatConfigs.strict,
+    languageOptions: { globals: { ...globals.browser } },
+  },
+  {
+    files: ['apps/web-app/src/**/*.{ts,tsx}', 'apps/web-app/public/**/*.js'],
+    languageOptions: { globals: { ...globals.browser } },
+  },
+  {
     files: ['packages/domain/src/**/*.ts'],
     ignores: ['**/*.test.ts'],
     rules: {
@@ -100,5 +116,10 @@ export default tseslint.config(
       // Testes leem migrações e fixtures do próprio repositório, por caminhos montados em constantes.
       'security/detect-non-literal-fs-filename': 'off',
     },
+  },
+  {
+    // Scripts de geração gravam em pastas fixas do próprio repositório.
+    files: ['apps/*/scripts/**/*.ts'],
+    rules: { 'security/detect-non-literal-fs-filename': 'off' },
   },
 );

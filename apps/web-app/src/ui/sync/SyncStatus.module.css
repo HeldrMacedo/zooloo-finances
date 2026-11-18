@@ -1,0 +1,16 @@
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--zl-space-2);
+  font-size: var(--zl-text-xs);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* Offline usa o Sun da marca como aviso, com texto Midnight (doc 13 §2.4). */
+.offline {
+  padding: var(--zl-space-1) var(--zl-space-2);
+  border-radius: var(--zl-radius-sm);
+  background: var(--zl-warning);
+  color: var(--zl-warning-text);
+}

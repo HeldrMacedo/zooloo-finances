@@ -10,12 +10,13 @@ export const ptBR = {
   },
   nav: {
     summary: 'Resumo',
-    transactions: 'Lançamentos',
+    transactions: 'Transações',
     accounts: 'Contas',
     cards: 'Cartões',
     budgets: 'Orçamentos',
     goals: 'Objetivos',
     reports: 'Relatórios',
+    charts: 'Gráficos',
     calendar: 'Calendário',
     categories: 'Categorias',
     settings: 'Configurações',
@@ -67,6 +68,30 @@ export const ptBR = {
   privacy: {
     showValues: 'Mostrar valores',
     hideValues: 'Ocultar valores',
+    hiddenValue: 'Valor oculto',
+  },
+  shell: {
+    skipToContent: 'Pular para o conteúdo',
+    mainNav: 'Menu principal',
+    searchLabel: 'Buscar lançamentos',
+    searchPlaceholder: 'Buscar lançamentos',
+    newExpenseShortcut: 'Nova despesa (atalho N)',
+    comingSoonTitle: 'Em construção',
+    comingSoonBody: 'Esta área ainda está sendo construída. Volte em breve.',
+    notFoundTitle: 'Página não encontrada',
+    notFoundBody: 'O endereço não existe ou mudou. Use o menu para continuar.',
+    backToSummary: 'Ir para o Resumo',
+  },
+  theme: {
+    label: 'Tema',
+    light: 'Claro',
+    dark: 'Escuro',
+    system: 'Automático',
+    switchTo: 'Tema: {current}. Trocar tema',
+  },
+  amount: {
+    income: 'entrada',
+    expense: 'saída',
   },
 } as const;
 

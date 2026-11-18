@@ -23,6 +23,17 @@ export const DEFAULT_THRESHOLDS = {
   statements: 90,
 };
 
+/**
+ * UI Web/PWA e mobile: RNF-QA-05.
+ * @type {CoverageThresholds}
+ */
+export const UI_THRESHOLDS = {
+  lines: 70,
+  branches: 70,
+  functions: 70,
+  statements: 70,
+};
+
 /** @param {CoverageThresholds} thresholds */
 export function packageTestConfig(thresholds) {
   return defineConfig({

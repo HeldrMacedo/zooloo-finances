@@ -10,6 +10,7 @@ Mapa, não manual (doc 12 §3). Detalhes ficam nos documentos apontados abaixo.
 - No núcleo financeiro rode também `pnpm test:mutation` (Stryker, score ≥ 80%).
 - Testes do `@zooloo/db-schema` sobem PostgreSQL com Testcontainers: Docker precisa estar rodando.
 - Mudou tabela? `pnpm --filter @zooloo/db-schema db:generate` e versione as migrações.
+- Mudou UI? Confira em `/app/design` (só em dev) nos dois temas; captura de tela: Chrome headless com `--screenshot` e `--blink-settings=preferredColorScheme=0|1`.
 - Mudou rota da API? `pnpm build && pnpm --filter @zooloo/api openapi` e versione `apps/api/openapi.json`.
 - Suba o ambiente da sua worktree: `pnpm dev:worktree` (PostgreSQL, Redis, migrações, seed sintético e API em watch). Portas e banco derivam do nome da worktree; veja com `pnpm dev:worktree status`. Encerre e apague com `pnpm dev:worktree down`.
 - Escale para uma pessoa nos casos de `docs/design-docs/core-beliefs.md#escalar`.
@@ -19,7 +20,7 @@ Mapa, não manual (doc 12 §3). Detalhes ficam nos documentos apontados abaixo.
 - `pnpm check` — todos os gates locais.
 - `pnpm --filter @zooloo/domain test` — testes de um pacote.
 - `pnpm format` — Prettier.
-- `pnpm dev:worktree [up|api|down|status]` — ambiente local isolado (Docker).
+- `pnpm dev:worktree [up|api|web|down|status]` — ambiente local isolado (Docker), API e web-app.
 
 ## Onde procurar
 - Arquitetura, camadas e pacotes: `ARCHITECTURE.md`

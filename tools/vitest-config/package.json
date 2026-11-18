@@ -5,7 +5,10 @@
   "description": "Configuração compartilhada do Vitest e metas de cobertura por camada (doc 04 §7A).",
   "type": "module",
   "exports": {
-    ".": "./index.js"
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    }
   },
   "peerDependencies": {
     "vitest": "5.1.0"

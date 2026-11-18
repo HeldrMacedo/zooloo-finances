@@ -1,0 +1,35 @@
+.page {
+  display: grid;
+  gap: var(--zl-space-6);
+  max-width: 75rem;
+}
+
+.title {
+  font-size: var(--zl-text-2xl);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.empty {
+  display: grid;
+  justify-items: start;
+  gap: var(--zl-space-2);
+  max-width: 34rem;
+  padding: var(--zl-space-8) 0;
+}
+
+.emptyIcon {
+  color: var(--zl-link);
+  margin-bottom: var(--zl-space-2);
+}
+
+.emptyTitle {
+  font-family: var(--zl-font-ui);
+  font-size: var(--zl-text-lg);
+  font-weight: 600;
+}
+
+.emptyBody {
+  color: var(--zl-text-muted);
+  max-width: 60ch;
+}

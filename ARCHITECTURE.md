@@ -16,7 +16,7 @@ Fonte normativa: `docs/product-specs/09-arquitetura-e-stack.md` (stack) e `docs/
 | `packages/i18n` | ativo | Catálogo pt-BR tipado com plural, `formatMoney`/`parseMoneyInput` sem float, `formatLocalDate` |
 | `apps/api` | ativo | NestJS 12 + Fastify (ADR-0002): `/api/v1`, health, OpenAPI dos schemas Zod, problem+json, helmet; sync e SSE planejados |
 | `apps/workers` | planejado | BullMQ: recorrências, e-mails, jobs LGPD |
-| `apps/web-app` | planejado | Vite + React PWA em `/app` |
+| `apps/web-app` | ativo | Vite 8 + React 19 em `/app/`: app shell (topbar, menu lateral), componentes base, temas claro/escuro/automático, modo privado, atalhos `/` e `N`, manifest e ícones provisórios; Service Worker e banco local na PoC 1 |
 | `apps/site` | planejado | Next.js: landing, termos, privacidade |
 | `apps/mobile`, `apps/kids`, `apps/mcp` | reservado | Fases 2, 4 e 5 |
 | `tools/dev-worktree` | ativo | `pnpm dev:worktree`: Docker Compose por worktree (`infra/dev`), migrações, seed sintético, `.env.worktree`, API em watch |
@@ -38,6 +38,14 @@ Em dev e teste os pacotes são lidos de `src/` pela condição de export `@zoolo
 - Validação na fronteira: `@Body({ schema: XxxSchema })` com schemas de `@zooloo/validation`; o pipe global (`StandardSchemaValidationPipe`) responde 422 em problem+json.
 - Acesso a dados do usuário só por `DatabaseService.withUser(userId, tx => …)`, que abre a transação no contexto da RLS.
 - OpenAPI gerado dos controllers e dos schemas Zod (`standardSchema`). Mudou a API? `pnpm build && pnpm --filter @zooloo/api openapi` e versione `apps/api/openapi.json`; o CI falha se divergir.
+
+## Web-app (`apps/web-app`)
+
+- `src/ui/`: componentes do design system (Button, TextField, Card, Amount, ZoolooLogo, SyncStatus) e contextos de tema e privacidade. Cores só por variáveis `--zl-*`, geradas de `@zooloo/ui-tokens` no build (`build/tokens-css.ts`, módulo `virtual:zooloo-tokens.css`); nada de hex solto em CSS.
+- `src/app/`: shell, rotas e páginas. Telas do menu ainda não construídas usam `ComingSoonPage`.
+- Valor monetário na tela só por `<Amount>` (sinal, cor e nome acessível de entrada/saída; modo privado).
+- Ícones e logotipo provisórios (doc 13 §7.1): `pnpm --filter @zooloo/web-app icons` gera `public/icons/`; a troca pelos vetores definitivos acontece só em `scripts/provisional-mark.ts` e `src/ui/brand/ZoolooLogo.tsx`.
+- Vitrine do design system em `/app/design`, só em desenvolvimento, para revisão visual por pessoas e agentes.
 
 ## Banco de dados
 

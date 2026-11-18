@@ -1,0 +1,98 @@
+/* Base do app. Cores e escala vêm de virtual:zooloo-tokens.css (doc 13 §6); aqui só derivados. */
+:root {
+  --zl-border: color-mix(in srgb, var(--zl-text) 12%, transparent);
+  --zl-border-strong: color-mix(in srgb, var(--zl-text) 28%, transparent);
+  --zl-hover: color-mix(in srgb, var(--zl-text) 6%, transparent);
+  --zl-shadow: 0 1px 2px color-mix(in srgb, var(--zl-brand-midnight) 8%, transparent);
+  --zl-focus: var(--zl-link);
+  --zl-topbar-height: 3.5rem;
+  --zl-sidebar-width: 15rem;
+  --zl-space-1: 0.25rem;
+  --zl-space-2: 0.5rem;
+  --zl-space-3: 0.75rem;
+  --zl-space-4: 1rem;
+  --zl-space-6: 1.5rem;
+  --zl-space-8: 2rem;
+  /* Card de destaque: Mint no claro; no escuro, Midnight levemente tingido de Teal. */
+  --zl-highlight: var(--zl-nav-active);
+}
+
+:root[data-theme='dark'] {
+  --zl-highlight: color-mix(in srgb, var(--zl-brand-teal) 14%, var(--zl-surface));
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --zl-highlight: color-mix(in srgb, var(--zl-brand-teal) 14%, var(--zl-surface));
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: var(--zl-font-ui);
+  font-size: 100%;
+  line-height: 1.5;
+  color: var(--zl-text);
+  background: var(--zl-background);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--zl-font-display);
+  line-height: 1.2;
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+a {
+  color: var(--zl-link);
+}
+
+:focus-visible {
+  outline: 2px solid var(--zl-focus);
+  outline-offset: 2px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

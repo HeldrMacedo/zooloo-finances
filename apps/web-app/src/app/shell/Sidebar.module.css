@@ -1,0 +1,68 @@
+.sidebar {
+  position: sticky;
+  top: var(--zl-topbar-height);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--zl-space-6);
+  height: calc(100dvh - var(--zl-topbar-height));
+  padding: var(--zl-space-4) var(--zl-space-3);
+  overflow-y: auto;
+}
+
+.list {
+  display: grid;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  gap: var(--zl-space-3);
+  min-height: 2.5rem;
+  padding: 0 var(--zl-space-3);
+  border-radius: var(--zl-radius-sm);
+  color: var(--zl-text);
+  font-size: var(--zl-text-sm);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.link:hover {
+  background: var(--zl-hover);
+}
+
+/* Item ativo: Mint com texto Midnight e ícone Teal-700 (doc 13 §5.1). */
+.link:global(.active) {
+  background: var(--zl-nav-active);
+  color: var(--zl-nav-active-text);
+  font-weight: 600;
+}
+
+.link:global(.active) svg {
+  color: var(--zl-link);
+}
+
+@media (max-width: 63.99rem) {
+  .sidebar {
+    padding: var(--zl-space-3) var(--zl-space-2);
+  }
+
+  .link {
+    justify-content: center;
+    padding: 0;
+    width: 2.75rem;
+  }
+
+  .label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+}

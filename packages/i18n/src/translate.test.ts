@@ -7,7 +7,7 @@ describe('createTranslator', () => {
 
   it('traduz chave simples', () => {
     expect(t('app.name')).toBe('Zooloo Finanças');
-    expect(t('nav.transactions')).toBe('Lançamentos');
+    expect(t('nav.transactions')).toBe('Transações');
   });
 
   it('interpola parâmetros', () => {

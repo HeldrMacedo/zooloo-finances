@@ -1,0 +1,51 @@
+.shell {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  min-height: 100dvh;
+}
+
+.body {
+  display: grid;
+  grid-template-columns: var(--zl-sidebar-width) minmax(0, 1fr);
+}
+
+/* Coluna do menu: o fundo e a borda acompanham a altura da página; o menu fica fixo dentro dela. */
+.rail {
+  border-right: 1px solid var(--zl-border);
+  background: var(--zl-surface);
+}
+
+.main {
+  min-width: 0;
+  padding: var(--zl-space-8);
+}
+
+.main:focus {
+  outline: none;
+}
+
+.skipLink {
+  position: absolute;
+  left: var(--zl-space-4);
+  top: -3rem;
+  z-index: 20;
+  padding: var(--zl-space-2) var(--zl-space-4);
+  border-radius: var(--zl-radius-sm);
+  background: var(--zl-surface);
+  color: var(--zl-text);
+  font-weight: 600;
+}
+
+.skipLink:focus {
+  top: var(--zl-space-2);
+}
+
+@media (max-width: 63.99rem) {
+  .body {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .main {
+    padding: var(--zl-space-6) var(--zl-space-4);
+  }
+}

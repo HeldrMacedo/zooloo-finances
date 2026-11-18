@@ -1,0 +1,39 @@
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--zl-text);
+}
+
+.negative {
+  color: var(--zl-brand-white);
+}
+
+/* Tamanho mínimo do símbolo: 24 px (doc 13 §1). */
+.mark {
+  width: 2rem;
+  height: 2rem;
+  flex: none;
+}
+
+.wordmark {
+  display: inline-grid;
+  justify-items: stretch;
+  line-height: 1;
+}
+
+.word {
+  font-family: var(--zl-font-display);
+  font-weight: 800;
+  font-size: 1.35rem;
+  letter-spacing: -0.02em;
+}
+
+/* "FINANÇAS" espaçado e alinhado à largura da palavra (doc 13 §1). */
+.descriptor {
+  font-size: 0.56rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.32em;
+  margin-top: 0.15rem;
+}

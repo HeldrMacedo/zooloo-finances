@@ -12,3 +12,4 @@ Atualizado por agentes de manutenção (doc 12 §8). Metas: doc 04 §7A.
 | `@zooloo/db-schema` | risco alto | 100% linhas (meta 95/90) | — (declarativo; testes de integração) | limpo | A | 2026-11-18 |
 | `@zooloo/api` | API e workers | 100% / 100% (meta 90) | — | limpo | A | 2026-11-18 |
 | `@zooloo/dev-worktree` | ferramenta | 100% / 100% (meta 90) | — | limpo | A | 2026-11-18 |
+| `@zooloo/web-app` | UI Web/PWA | 99% / 94% (meta 70) | — | limpo; axe sem violações | A | 2026-11-18 |

@@ -1,0 +1,72 @@
+.amount {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.12em;
+  font-family: var(--zl-font-display);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+  white-space: nowrap;
+  line-height: 1.1;
+}
+
+.sign {
+  font-weight: 600;
+}
+
+/* Símbolo da moeda menor e no alto: o número carrega a leitura. */
+.currency {
+  align-self: flex-start;
+  font-size: 0.55em;
+  font-weight: 600;
+  padding-top: 0.12em;
+  letter-spacing: 0.02em;
+}
+
+.number {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.sm {
+  font-size: var(--zl-text-sm);
+}
+
+.md {
+  font-size: var(--zl-text-md);
+}
+
+.lg {
+  font-size: var(--zl-text-xl);
+}
+
+.display {
+  font-size: clamp(var(--zl-text-2xl), 4vw, var(--zl-text-3xl));
+  letter-spacing: -0.02em;
+}
+
+.display .number {
+  font-weight: 800;
+}
+
+.sm .currency,
+.md .currency {
+  align-self: baseline;
+  font-size: 0.85em;
+  padding-top: 0;
+}
+
+.income {
+  color: var(--zl-income);
+}
+
+.expense {
+  color: var(--zl-expense);
+}
+
+.neutral {
+  color: inherit;
+}
+
+.amount[data-hidden] {
+  color: var(--zl-text-muted);
+}

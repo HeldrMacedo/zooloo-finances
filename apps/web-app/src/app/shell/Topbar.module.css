@@ -1,0 +1,75 @@
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: var(--zl-space-6);
+  height: var(--zl-topbar-height);
+  padding: 0 var(--zl-space-4) 0 var(--zl-space-6);
+  background: var(--zl-topbar);
+  color: var(--zl-topbar-text);
+  /* Separa a topbar do conteúdo no tema escuro, onde os dois são Midnight. */
+  box-shadow: 0 1px 0 color-mix(in srgb, var(--zl-brand-white) 9%, transparent);
+  /* PWA instalado com Window Controls Overlay: a topbar ocupa a barra de título. */
+  app-region: drag;
+}
+
+.topbar :is(button, input, a) {
+  app-region: no-drag;
+}
+
+.search {
+  position: relative;
+  flex: 1;
+  max-width: 28rem;
+}
+
+.searchIcon {
+  position: absolute;
+  left: var(--zl-space-3);
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.75;
+}
+
+/* Campo translúcido sobre o Midnight: texto branco tem contraste ≥ 4,5:1 nas duas cores de fundo. */
+.searchInput {
+  width: 100%;
+  height: 2.25rem;
+  padding: 0 var(--zl-space-3) 0 2.25rem;
+  border: 1px solid color-mix(in srgb, var(--zl-brand-white) 18%, transparent);
+  border-radius: var(--zl-radius-sm);
+  background: color-mix(in srgb, var(--zl-brand-white) 8%, transparent);
+  color: inherit;
+}
+
+.searchInput::placeholder {
+  color: color-mix(in srgb, var(--zl-brand-white) 72%, transparent);
+}
+
+.searchInput:focus-visible {
+  outline-color: var(--zl-brand-teal);
+  background: color-mix(in srgb, var(--zl-brand-white) 12%, transparent);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--zl-space-2);
+  margin-left: auto;
+}
+
+.onDark:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--zl-brand-white) 12%, transparent);
+}
+
+.onDark:focus-visible {
+  outline-color: var(--zl-brand-teal);
+}
+
+@media (max-width: 47.99rem) {
+  .search {
+    display: none;
+  }
+}

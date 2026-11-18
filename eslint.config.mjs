@@ -1,6 +1,7 @@
 // Linters de "gosto" (doc 12 §5.2). Cada mensagem diz como corrigir e aponta o doc de origem.
 import js from '@eslint/js';
 import globals from 'globals';
+import security from 'eslint-plugin-security';
 import tseslint from 'typescript-eslint';
 
 const SPECS = 'docs/product-specs';
@@ -18,6 +19,12 @@ export default tseslint.config(
   },
   js.configs.recommended,
   ...tseslint.configs.strict,
+  // Lint de segurança (SEC-DEV-02).
+  security.configs.recommended,
+  {
+    // Falso positivo em todo acesso por chave tipada; TS strict + noUncheckedIndexedAccess cobrem o risco.
+    rules: { 'security/detect-object-injection': 'off' },
+  },
   {
     languageOptions: { globals: { ...globals.node } },
     rules: {

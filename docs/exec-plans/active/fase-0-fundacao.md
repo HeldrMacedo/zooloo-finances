@@ -22,7 +22,7 @@ Deixar o ambiente pronto para que agentes entreguem funcionalidades com seguran�
 | 3 | `@zooloo/domain`: `Money`, `LocalDate`, half-even, parcelas, ciclo de fatura, orçamento | feito (início) |
 | 4 | `@zooloo/ui-tokens` com temas e teste de contraste | feito (tokens); componentes base pendentes |
 | 5 | CI (GitHub Actions) com `pnpm check`, mutação, varredura de segredos, SCA e SAST | feito (arquivo); validar no primeiro push |
-| 6 | `@zooloo/security`: logger estruturado com mascaramento + teste de mascaramento (SEC-DEV-02) | pendente |
+| 6 | `@zooloo/security`: logger estruturado com mascaramento + teste de mascaramento (SEC-DEV-02) | feito (logger); criptografia pendente |
 | 7 | `@zooloo/validation` (Zod) e `@zooloo/i18n` (pt-BR) | pendente |
 | 8 | `@zooloo/db-schema`: Drizzle SQLite + PostgreSQL, teste estrutural "toda tabela de usuário tem RLS" | pendente |
 | 9 | `apps/api` (NestJS + Fastify, ADR-0002) com health check, OpenAPI e teste de integração com Testcontainers | pendente |
@@ -43,3 +43,4 @@ Deixar o ambiente pronto para que agentes entreguem funcionalidades com seguran�
 
 - **2026-11-18** — Passos 1–5. `git init`; docs 01–13 movidos para `docs/product-specs/` (README virou `index.md`). `pnpm check` verde: lint, dependency-cruiser, typecheck e testes. `@zooloo/domain`: 60 testes, cobertura 100% linhas/branches, mutação 89,14%. `@zooloo/ui-tokens`: 38 testes, cobertura 100%; todos os pares de texto dos temas claro e escuro ≥ 4,5:1. Regras de lint testadas com arquivo-sonda (import de I/O no domínio, `new Date()`, `toFixed`, `console`, non-null assertion): todas disparam. Decisões em ADR-0001.
 - **2026-11-18** — Decisões do produto: Docker Desktop instalado; dono do CODEOWNERS @HeldrMacedo; API em NestJS + Fastify (ADR-0002); hospedagem no Brasil (ADR-0003).
+- **2026-11-18** — Passo 6. `@zooloo/security`: `createLogger` (sink injetável, níveis, `child`), `redact` por classificação do doc 10 §2 (C4 removido, C3/C2 mascarados, `Money` mascarado em qualquer chave, ciclos e profundidade), `maskText` (e-mail, JWT, Bearer em texto livre), `stdoutSink`. 90 testes, cobertura 100%, mutação 97,7%. A mutação revelou listas de chaves sem teste (corrigido com teste tabela normativo) e um vazamento real: IPv6 comprimido (`fe80::1`) saía inteiro; corrigido para nunca manter o grupo do host. `eslint-plugin-security` ativo no lint (SEC-DEV-02), com `detect-object-injection` desligada por falso positivo em TS strict.

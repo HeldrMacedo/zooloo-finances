@@ -11,7 +11,7 @@ Fonte normativa: `docs/product-specs/09-arquitetura-e-stack.md` (stack) e `docs/
 | `packages/sync-core` | planejado | Outbox, pull/push, HLC, merge por campo |
 | `packages/db-schema` | planejado | Drizzle: esquema SQLite local + PostgreSQL |
 | `packages/validation` | planejado | Schemas Zod compartilhados |
-| `packages/security` | planejado | Logger mascarado, criptografia, sanitização |
+| `packages/security` | ativo | Logger estruturado com mascaramento (SEC-LOG-01); criptografia e sanitização planejadas |
 | `packages/api-client` | planejado | Cliente tipado gerado do OpenAPI |
 | `packages/i18n` | planejado | Textos pt-BR |
 | `apps/api` | planejado | NestJS + Fastify (ADR-0002): REST `/api/v1`, sync, SSE/WebSocket |

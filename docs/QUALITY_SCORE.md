@@ -6,3 +6,4 @@ Atualizado por agentes de manutenção (doc 12 §8). Metas: doc 04 §7A.
 |---|---|---|---|---|---|---|
 | `@zooloo/domain` | núcleo financeiro | 100% / 100% (meta 95/90) | 89,1% (meta 80) | limpo | A | 2026-11-18 |
 | `@zooloo/ui-tokens` | UI base | 100% / 100% (meta 90) | — | limpo | A | 2026-11-18 |
+| `@zooloo/security` | risco alto | 100% / 100% (meta 95/90) | 97,7% (meta 80) | limpo | A | 2026-11-18 |

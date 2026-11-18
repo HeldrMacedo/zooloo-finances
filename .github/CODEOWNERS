@@ -1,0 +1,12 @@
+# Nível de risco alto (doc 12 §6.2): 2 aprovações humanas.
+# Dono: Helder Macedo (https://github.com/HeldrMacedo).
+/.github/                    @HeldrMacedo
+/eslint.config.mjs           @HeldrMacedo
+/.dependency-cruiser.cjs     @HeldrMacedo
+**/vitest.config.ts          @HeldrMacedo
+**/stryker.config.json       @HeldrMacedo
+/packages/domain/            @HeldrMacedo
+/packages/sync-core/         @HeldrMacedo
+/packages/security/          @HeldrMacedo
+/packages/db-schema/         @HeldrMacedo
+/docs/product-specs/10-seguranca-e-protecao-de-dados.md @HeldrMacedo

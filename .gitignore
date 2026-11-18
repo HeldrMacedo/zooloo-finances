@@ -1,0 +1,12 @@
+node_modules/
+dist/
+coverage/
+reports/
+.turbo/
+.stryker-tmp/
+*.log
+.env
+.env.*
+!.env.example
+.claude/settings.local.json
+.claude/.headroom*

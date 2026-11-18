@@ -1,0 +1,7 @@
+pnpm-lock.yaml
+coverage/
+reports/
+dist/
+docs/
+brand/
+*.md

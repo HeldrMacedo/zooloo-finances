@@ -1,0 +1,8 @@
+# Nota de qualidade
+
+Atualizado por agentes de manutenção (doc 12 §8). Metas: doc 04 §7A.
+
+| Pacote | Camada | Cobertura linhas / branches | Mutação | Lint | Nota | Data |
+|---|---|---|---|---|---|---|
+| `@zooloo/domain` | núcleo financeiro | 100% / 100% (meta 95/90) | 89,1% (meta 80) | limpo | A | 2026-11-18 |
+| `@zooloo/ui-tokens` | UI base | 100% / 100% (meta 90) | — | limpo | A | 2026-11-18 |

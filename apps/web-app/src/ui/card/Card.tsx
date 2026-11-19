@@ -6,12 +6,12 @@ export interface CardProps extends HTMLAttributes<HTMLElement> {
   readonly title?: string;
   /** Ação no canto do cabeçalho (ex.: "Ver todos"). */
   readonly action?: ReactNode;
-  /** `highlight` usa fundo Mint para o card principal da tela; os demais ficam brancos. */
+  /** `highlight` usa o fundo de subcard para o card principal da tela; os demais ficam Sand-50. */
   readonly tone?: 'plain' | 'highlight';
   readonly children: ReactNode;
 }
 
-/** Card de conteúdo (doc 13 §4: raio 16 px, sombra leve). Um destaque por tela, no máximo. */
+/** Card de conteúdo (doc 13 §5.1: raio 18 px, borda sutil, sombra leve). Um destaque por tela, no máximo. */
 export function Card({ title, action, tone = 'plain', className, children, ...rest }: CardProps) {
   const classes = [styles.card, tone === 'highlight' && styles.highlight, className]
     .filter(Boolean)

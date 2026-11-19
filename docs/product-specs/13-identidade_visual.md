@@ -27,25 +27,37 @@
 
 ### 2.1 Cores da marca
 
+**Decisão** (19/11/2026): a paleta segue o painel de referência `docs/references/zooloo_finan_as_web_desktop_dashboard.html` (azul-marinho, teal acinzentado, âmbar e fundos areia), no lugar da paleta Mint/Teal da prancha.
+
 | Token | Nome | Hex | Papel |
 |---|---|---|---|
-| `color.midnight` | Midnight | `#142B3B` | Texto principal, topbar, fundo do tema escuro, plano Pro |
-| `color.teal` | Zooloo Teal | `#16B89A` | Cor principal da marca: símbolo, destaques, gráficos, barras de progresso, ícones ativos |
-| `color.sun` | Sun | `#FFC857` | Destaque e calor: avisos, recompensas, detalhes premium, Zooloo Kids |
-| `color.mint` | Mint | `#E8F7F2` | Fundos de seção, cards de destaque, item ativo de menu, plano Essencial |
-| `color.warm-white` | Warm White | `#F8FAF8` | Fundo da aplicação no tema claro |
+| `color.midnight` | Midnight | `#16324A` | Texto principal, item ativo do menu, botão primário, plano Pro |
+| `color.teal` | Zooloo Teal | `#2D6E85` | Cor principal da marca: símbolo, destaques, gráficos, anéis de progresso, links |
+| `color.teal-300` | Soft Teal | `#78A5B0` | Detalhes do símbolo, gráficos, links no tema escuro |
+| `color.sun` | Sun (âmbar) | `#E59934` | Destaque e calor: avisos, faturas, botão "Pagar", selos, Zooloo Kids |
+| `color.terracotta` | Terracota | `#BC4E26` | Gráficos e alertas; base da cor de despesa |
+| `color.sand` | Sand | `#F5F1EB` | Fundo da aplicação no tema claro |
 
 ### 2.2 Cores derivadas [I]
 
-Necessárias para cumprir contraste (RNF-UX-01, WCAG 2.1 AA):
+Necessárias para superfícies e para cumprir contraste (RNF-UX-01, WCAG 2.1 AA):
 
 | Token | Hex | Uso |
 |---|---|---|
-| `color.teal-700` | `#0B7A66` | Botão primário com texto branco, links e texto em Teal sobre fundo claro |
-| `color.surface` | `#FFFFFF` | Cards no tema claro |
-| `color.text-muted` | `#5B6B77` | Texto secundário no tema claro |
-| `color.midnight-900` | `#0F1F2B` | Fundo de página no tema escuro (cards em `#142B3B`) |
-| `color.text-muted-dark` | `#9FB3C1` | Texto secundário no tema escuro |
+| `color.sand-50` | `#FAF7F2` | Cards no tema claro |
+| `color.sand-100` | `#F1ECE3` | Subcards, cabeçalho de tabela, campos |
+| `color.sand-200` | `#EFEAE1` | Menu lateral no tema claro |
+| `color.sand-300` / `sand-400` | `#E6DFD3` / `#D6CCBC` | Bordas sutil e forte no tema claro |
+| `color.text-muted` | `#5A6874` | Texto secundário no tema claro (a referência usa `#637381`, que fica abaixo de 4,5:1 sobre Sand) |
+| `color.midnight-950` | `#0B1D2C` | Fundo de página no tema escuro |
+| `color.midnight-900` | `#0E2231` | Menu lateral no tema escuro; texto sobre Sun e Ice |
+| `color.midnight-800` / `700` | `#132B3E` / `#18344B` | Cards e subcards no tema escuro |
+| `color.midnight-600` / `500` | `#1E3D56` / `#2A506F` | Bordas sutil e forte no tema escuro |
+| `color.ice` | `#C7D8E2` | Item ativo do menu e botão primário no tema escuro |
+| `color.cloud` | `#F1F5F9` | Texto principal no tema escuro |
+| `color.text-muted-dark` | `#94A3B8` | Texto secundário no tema escuro |
+| `color.teal-400` | `#3C849C` | Anéis e barras no tema escuro (só gráfico) |
+| `color.terracotta-400` | `#D9653B` | Gráficos no tema escuro |
 
 ### 2.3 Regras de contraste
 
@@ -53,16 +65,15 @@ Razões de contraste calculadas (WCAG):
 
 | Combinação | Contraste | Uso permitido |
 |---|---|---|
-| Midnight sobre Warm White / branco / Mint | 13,9 / 14,6 / 13,2 | Qualquer texto |
-| Midnight sobre Sun | 9,5 | Qualquer texto (botões e selos em Sun usam texto Midnight) |
-| Midnight sobre Teal | 5,8 | Qualquer texto |
-| Branco sobre Teal-700 `#0B7A66` | 5,3 | Qualquer texto (botão primário) |
-| Teal sobre Midnight | 5,8 | Qualquer texto (tema escuro) |
-| Branco sobre **Teal** `#16B89A` | **2,5** | Só ícones grandes e títulos ≥ 24 px; **nunca** texto de corpo nem botões |
-| Teal sobre branco / Warm White | **2,5** | Só elementos gráficos (barras, ícones, bordas), **nunca** texto |
-| Sun sobre branco | **1,5** | Só elementos gráficos com contorno ou sobre Midnight |
-
-> A prancha mostra texto branco sobre Teal (botão "Instalar aplicativo Zooloo", card do Zooloo Plus, balões da Zoe). Na implementação, esses elementos usam **Teal-700** (`#0B7A66`) com texto branco, ou Teal com texto Midnight.
+| Midnight sobre Sand / Sand-50 / Sand-100 | 11,7 / 12,4 / 11,2 | Qualquer texto |
+| Branco sobre Midnight | 13,2 | Qualquer texto (item ativo, botão primário) |
+| Branco sobre Teal | 5,7 | Qualquer texto (avatar da Zoe, selos) |
+| Midnight-900 sobre Sun | 6,9 | Qualquer texto (botões e selos em Sun) |
+| Midnight-900 sobre Ice | 11,1 | Qualquer texto (tema escuro) |
+| Teal sobre Sand-50 / Sand-100 | 5,3 / 4,9 | Links e texto em Teal no tema claro |
+| Midnight sobre **Teal** | **2,3** | Só elementos gráficos, **nunca** texto |
+| Sun sobre Sand-50 | **2,2** | Só elementos gráficos (barras, pontos, ícones) |
+| Teal-400 sobre Midnight-800 | **3,5** | Só elementos gráficos no tema escuro; texto usa Soft Teal (5,4) |
 
 ### 2.4 Cores semânticas financeiras [I]
 
@@ -70,12 +81,12 @@ A cor da marca **não** representa entrada de dinheiro. Receita e despesa têm c
 
 | Token | Tema claro | Tema escuro | Uso |
 |---|---|---|---|
-| `color.income` | `#15803D` (5,0 sobre branco) | `#4ADE80` (8,4 sobre Midnight) | Receitas, valores positivos |
-| `color.expense` | `#B91C1C` (6,5 sobre branco) | `#F87171` (5,3 sobre Midnight) | Despesas, valores negativos, saldo negativo |
-| `color.warning` | fundo Sun + texto Midnight | fundo Sun + texto Midnight | Vencimentos próximos, orçamento perto do limite |
-| `color.info` | Teal-700 | Teal | Pendências, sincronização |
+| `color.income` | `#18744C` (≥ 4,8 sobre as superfícies claras) | `#80ED99` (≥ 8,8 sobre as escuras) | Receitas, valores positivos |
+| `color.expense` | `#AD4621` (≥ 4,7 sobre as superfícies claras) | `#EA8461` (≥ 4,8 sobre as escuras) | Despesas, valores negativos, saldo negativo |
+| `color.warning` | fundo Sun + texto Midnight-900 | fundo Sun + texto Midnight-900 | Vencimentos próximos, orçamento perto do limite |
+| `color.info` | Teal | Soft Teal | Pendências, sincronização |
 
-Gráficos usam a sequência: Teal, Midnight, Sun, laranja `#F47C3C`, Mint com borda, cinza `#9FB3C1`, sempre com legenda textual.
+Gráficos usam a sequência: Midnight, Teal, Soft Teal, Sun, Terracota, `#D6CCBC` no tema claro; Soft Teal, Teal-400, Ice, Sun, `#D9653B`, `#94A3B8` no escuro. Sempre com legenda textual.
 
 ## 3. Tipografia
 
@@ -97,7 +108,7 @@ Regras:
 
 ## 4. Iconografia e ilustração
 
-- **Ícones de interface**: linha, traço de 2 px, cantos arredondados, em Midnight (ativo em Teal-700). Proposta [I]: Lucide, por ser de linha e ter licença aberta.
+- **Ícones de interface**: linha, traço de 2 px, cantos arredondados, em Midnight (ativo em branco sobre Midnight). Proposta [I]: Lucide, por ser de linha e ter licença aberta.
 - **Ícones de plano** (prancha): Essencial = celular e tablet; Plus = setas de sincronização; Conecta = hexágono com cifrão entre setas; Pro = laurel com "IA".
 - **Mascote**: a coruja é o personagem da marca. Na Zoe, aparece como avatar; no Zooloo Kids, em versão ilustrada e expressiva.
 - Cantos arredondados (raio 12–16 px em cards, 8–10 px em botões e campos), sombras leves e muito espaço em branco.
@@ -106,20 +117,20 @@ Regras:
 
 ### 5.1 Web App e PWA
 
-Seguindo a prancha e o doc 06:
+Seguindo o painel de referência (`docs/references/zooloo_finan_as_web_desktop_dashboard.html`) e o doc 06:
 
-- **Topbar Midnight** com símbolo + "zooloo FINANÇAS" em branco, busca, botão "+" (novo lançamento, tecla `N`), notificações e avatar.
-- **Menu lateral** em fundo claro, item ativo em Mint com texto e ícone Midnight/Teal-700.
-- **Conteúdo** em Warm White com cards brancos.
-- Botão **"Instalar aplicativo Zooloo"** (RF-PWA-03) no cabeçalho da área de conteúdo, em Teal-700 com texto branco.
-- **Manifest do PWA**: `theme_color` `#142B3B` (combina com a topbar) e `background_color` `#F8FAF8`; ícones do símbolo em 192, 512 e *maskable* com área de segurança de 80%.
+- **Menu lateral** em altura total, fundo Sand-200, com símbolo + "Zooloo Finanças" no topo, item ativo em Midnight com texto branco e indicador de sincronização no rodapé. No desktop recolhe para trilho de ícones (botão de menu, lembrado no dispositivo); abaixo de 1024 px vira gaveta sobre o conteúdo.
+- **Cabeçalho do conteúdo** (sem barra escura): botão de menu, saudação e, à direita, seletor de mês, busca, privacidade, tema e botão primário "Nova despesa" (tecla `N`).
+- **Conteúdo** em Sand com cards Sand-50, raio 18 px, borda sutil e sombra leve.
+- Botão **"Instalar aplicativo Zooloo"** (RF-PWA-03) no cabeçalho da área de conteúdo, em Midnight com texto branco.
+- **Manifest do PWA**: `theme_color` `#16324A` e `background_color` `#F5F1EB`; ícones do símbolo em 192, 512 e *maskable* com área de segurança de 80%.
 
 ### 5.2 Planos
 
 | Plano | Fundo do card | Texto | Ícone |
 |---|---|---|---|
-| Zooloo Essencial | Mint | Midnight | Dispositivos |
-| Zooloo Plus | Teal-700 | Branco | Sincronização |
+| Zooloo Essencial | Sand-100 | Midnight | Dispositivos |
+| Zooloo Plus | Teal | Branco | Sincronização |
 | Zooloo Conecta | Teal (topo) para Sun (base) | Midnight | Hexágono com cifrão |
 | Zooloo Pro | Midnight | Título em Sun, texto branco | Laurel "IA" |
 
@@ -128,8 +139,8 @@ Seguindo a prancha e o doc 06:
 ### 5.3 Zoe
 
 - Avatar: símbolo da coruja.
-- Balão do usuário em Teal-700 com texto branco; balão da Zoe em branco ou Mint com texto Midnight.
-- Saldo de créditos de IA em selo Sun com texto Midnight.
+- Balão do usuário em Midnight com texto branco; balão da Zoe em Sand-100 com texto Midnight.
+- Saldo de créditos de IA em selo Sun com texto Midnight-900.
 
 ### 5.4 Zooloo Kids
 
@@ -145,20 +156,34 @@ Os valores deste documento são a fonte do pacote `@zooloo/ui-tokens` (doc 09 §
 ```json
 {
   "color": {
-    "midnight": "#142B3B",
-    "midnight-900": "#0F1F2B",
-    "teal": "#16B89A",
-    "teal-700": "#0B7A66",
-    "sun": "#FFC857",
-    "mint": "#E8F7F2",
-    "warm-white": "#F8FAF8",
-    "surface": "#FFFFFF",
-    "text-muted": "#5B6B77",
-    "text-muted-dark": "#9FB3C1",
-    "income": { "light": "#15803D", "dark": "#4ADE80" },
-    "expense": { "light": "#B91C1C", "dark": "#F87171" }
+    "midnight": "#16324A",
+    "midnight-950": "#0B1D2C",
+    "midnight-900": "#0E2231",
+    "midnight-800": "#132B3E",
+    "midnight-700": "#18344B",
+    "midnight-600": "#1E3D56",
+    "midnight-500": "#2A506F",
+    "teal": "#2D6E85",
+    "teal-400": "#3C849C",
+    "teal-300": "#78A5B0",
+    "ice": "#C7D8E2",
+    "sun": "#E59934",
+    "terracotta": "#BC4E26",
+    "terracotta-400": "#D9653B",
+    "sand": "#F5F1EB",
+    "sand-50": "#FAF7F2",
+    "sand-100": "#F1ECE3",
+    "sand-200": "#EFEAE1",
+    "sand-300": "#E6DFD3",
+    "sand-400": "#D6CCBC",
+    "white": "#FFFFFF",
+    "cloud": "#F1F5F9",
+    "text-muted": "#5A6874",
+    "text-muted-dark": "#94A3B8",
+    "income": { "light": "#18744C", "dark": "#80ED99" },
+    "expense": { "light": "#AD4621", "dark": "#EA8461" }
   },
-  "radius": { "sm": 8, "md": 12, "lg": 16 },
+  "radius": { "sm": 8, "md": 12, "lg": 16, "xl": 18 },
   "font": {
     "display": "Plus Jakarta Sans",
     "ui": "Inter",
@@ -180,8 +205,8 @@ Um teste automatizado verifica o contraste de todos os pares texto/fundo declara
 
 ### 7.1 Ativos provisórios (até a entrega dos vetores)
 
-- **Logotipo na topbar e no site**: componente `<ZoolooLogo>` em `@zooloo/ui-tokens` que, provisoriamente, renderiza o texto "zooloo" em Plus Jakarta Sans 800 + "FINANÇAS" espaçado, com um círculo Teal no lugar do símbolo.
-- **Ícones do PWA e favicon**: círculo Teal com "Z" em Midnight, gerados por script a partir dos tokens (192, 512, *maskable* e favicon).
+- **Logotipo no menu e no site**: componente `<ZoolooLogo>` que, provisoriamente, renderiza a coruja geométrica do painel de referência (corpo Teal, contorno Soft Teal, bico Sun) num quadrado Midnight, ao lado de "Zooloo Finanças".
+- **Ícones do PWA e favicon**: círculo Teal com "Z" branco, gerados por script a partir dos tokens (192, 512, *maskable* e favicon).
 - **Avatar da Zoe**: o mesmo círculo provisório.
 - Todos os usos passam por esse componente e por um único diretório de ícones (`apps/web-app/public/icons/`). Assim, quando os SVGs chegarem, a troca é feita em um só lugar, sem mudar telas.
 - Ativos provisórios não vão para o lançamento público (Fase 1.1).

@@ -1,33 +1,55 @@
 /** Fonte: docs/product-specs/13-identidade_visual.md §2 e §6. Altere lá antes de alterar aqui. */
 export const color = {
-  midnight: '#142B3B',
-  'midnight-900': '#0F1F2B',
-  teal: '#16B89A',
-  'teal-700': '#0B7A66',
-  sun: '#FFC857',
-  mint: '#E8F7F2',
-  'warm-white': '#F8FAF8',
-  surface: '#FFFFFF',
+  midnight: '#16324A',
+  'midnight-950': '#0B1D2C',
+  'midnight-900': '#0E2231',
+  'midnight-800': '#132B3E',
+  'midnight-700': '#18344B',
+  'midnight-600': '#1E3D56',
+  'midnight-500': '#2A506F',
+  teal: '#2D6E85',
+  'teal-400': '#3C849C',
+  'teal-300': '#78A5B0',
+  ice: '#C7D8E2',
+  sun: '#E59934',
+  terracotta: '#BC4E26',
+  'terracotta-400': '#D9653B',
+  sand: '#F5F1EB',
+  'sand-50': '#FAF7F2',
+  'sand-100': '#F1ECE3',
+  'sand-200': '#EFEAE1',
+  'sand-300': '#E6DFD3',
+  'sand-400': '#D6CCBC',
   white: '#FFFFFF',
-  'text-muted': '#5B6B77',
-  'text-muted-dark': '#9FB3C1',
-  orange: '#F47C3C',
-  income: { light: '#15803D', dark: '#4ADE80' },
-  expense: { light: '#B91C1C', dark: '#F87171' },
+  cloud: '#F1F5F9',
+  'text-muted': '#5A6874',
+  'text-muted-dark': '#94A3B8',
+  income: { light: '#18744C', dark: '#80ED99' },
+  expense: { light: '#AD4621', dark: '#EA8461' },
 } as const;
 
-/** Sequência de cores de gráficos (doc 13 §2.4), sempre com legenda textual. */
+/** Sequência de cores de gráficos no tema claro (doc 13 §2.4), sempre com legenda textual. */
 export const chartSequence = [
-  color.teal,
   color.midnight,
+  color.teal,
+  color['teal-300'],
   color.sun,
-  color.orange,
-  color.mint,
+  color.terracotta,
+  color['sand-400'],
+] as const;
+
+/** Sequência de cores de gráficos no tema escuro (doc 13 §2.4). */
+export const chartSequenceDark = [
+  color['teal-300'],
+  color['teal-400'],
+  color.ice,
+  color.sun,
+  color['terracotta-400'],
   color['text-muted-dark'],
 ] as const;
 
 /** Raios em px (doc 13 §4 e §6). */
-export const radius = { sm: 8, md: 12, lg: 16 } as const;
+export const radius = { sm: 8, md: 12, lg: 16, xl: 18 } as const;
 
 export const font = {
   display: 'Plus Jakarta Sans',

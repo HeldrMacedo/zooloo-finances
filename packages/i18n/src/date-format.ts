@@ -1,10 +1,11 @@
 import type { LocalDate } from '@zooloo/domain';
 import { LOCALE } from './money-format.js';
 
-export type DateStyle = 'short' | 'long' | 'month' | 'weekday';
+export type DateStyle = 'short' | 'dayMonth' | 'long' | 'month' | 'weekday';
 
 const STYLES: Record<DateStyle, Intl.DateTimeFormatOptions> = {
   short: { day: '2-digit', month: '2-digit', year: 'numeric' },
+  dayMonth: { day: '2-digit', month: '2-digit' },
   long: { day: 'numeric', month: 'long', year: 'numeric' },
   month: { month: 'long', year: 'numeric' },
   weekday: { weekday: 'long', day: 'numeric', month: 'long' },

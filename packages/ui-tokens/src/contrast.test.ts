@@ -5,20 +5,20 @@ import { GRAPHIC_ONLY_PAIRS, TEXT_PAIRS } from './pairs.js';
 describe('contrastRatio (WCAG 2.1)', () => {
   it('preto sobre branco = 21:1 e cor sobre ela mesma = 1:1', () => {
     expect(contrastRatio('#000000', '#FFFFFF')).toBeCloseTo(21, 5);
-    expect(contrastRatio('#16B89A', '#16B89A')).toBeCloseTo(1, 5);
+    expect(contrastRatio('#2D6E85', '#2D6E85')).toBeCloseTo(1, 5);
   });
 
   it('é simétrica', () => {
-    expect(contrastRatio('#142B3B', '#FFC857')).toBeCloseTo(
-      contrastRatio('#FFC857', '#142B3B'),
+    expect(contrastRatio('#16324A', '#E59934')).toBeCloseTo(
+      contrastRatio('#E59934', '#16324A'),
       10,
     );
   });
 
   it('confere os valores do doc 13 §2.3', () => {
-    expect(contrastRatio('#142B3B', '#FFFFFF')).toBeCloseTo(14.6, 1);
-    expect(contrastRatio('#FFFFFF', '#0B7A66')).toBeCloseTo(5.3, 1);
-    expect(contrastRatio('#FFFFFF', '#16B89A')).toBeCloseTo(2.5, 1);
+    expect(contrastRatio('#16324A', '#F5F1EB')).toBeCloseTo(11.7, 1);
+    expect(contrastRatio('#FFFFFF', '#2D6E85')).toBeCloseTo(5.7, 1);
+    expect(contrastRatio('#16324A', '#2D6E85')).toBeCloseTo(2.3, 1);
   });
 
   it('recusa cor fora do formato #RRGGBB', () => {

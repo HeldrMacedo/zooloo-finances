@@ -3,7 +3,7 @@ import { formatMoney, moneyParts, t } from '@zooloo/i18n';
 import { usePrivacy } from '../privacy/PrivacyContext.js';
 import styles from './Amount.module.css';
 
-export type AmountSize = 'sm' | 'md' | 'lg' | 'display';
+export type AmountSize = 'xs' | 'sm' | 'md' | 'lg' | 'display';
 
 export interface AmountProps {
   readonly value: Money;

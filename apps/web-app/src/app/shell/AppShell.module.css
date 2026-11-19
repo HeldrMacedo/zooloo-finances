@@ -1,34 +1,47 @@
 .shell {
-  display: grid;
-  grid-template-rows: auto 1fr;
+  display: flex;
   min-height: 100dvh;
 }
 
-.body {
-  display: grid;
-  grid-template-columns: var(--zl-sidebar-width) minmax(0, 1fr);
-}
-
-/* Coluna do menu: o fundo e a borda acompanham a altura da página; o menu fica fixo dentro dela. */
-.rail {
-  border-right: 1px solid var(--zl-border);
-  background: var(--zl-surface);
+.area {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--zl-space-5);
+  min-width: 0;
+  padding: var(--zl-space-5) 1.625rem var(--zl-space-8);
 }
 
 .main {
   min-width: 0;
-  padding: var(--zl-space-8);
 }
 
 .main:focus {
   outline: none;
 }
 
+/* Fundo escuro atrás da gaveta do menu (telas menores). */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  background: var(--zl-overlay);
+  backdrop-filter: blur(2px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 280ms ease;
+}
+
+.overlay[data-open] {
+  opacity: 1;
+  pointer-events: auto;
+}
+
 .skipLink {
   position: absolute;
   left: var(--zl-space-4);
   top: -3rem;
-  z-index: 20;
+  z-index: 60;
   padding: var(--zl-space-2) var(--zl-space-4);
   border-radius: var(--zl-radius-sm);
   background: var(--zl-surface);
@@ -40,12 +53,9 @@
   top: var(--zl-space-2);
 }
 
-@media (max-width: 63.99rem) {
-  .body {
-    grid-template-columns: auto minmax(0, 1fr);
-  }
-
-  .main {
-    padding: var(--zl-space-6) var(--zl-space-4);
+@media (max-width: 40rem) {
+  .area {
+    gap: var(--zl-space-4);
+    padding: 0.875rem 0.875rem 1.75rem;
   }
 }

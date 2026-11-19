@@ -3,6 +3,7 @@ import { ComingSoonPage } from './pages/ComingSoonPage.js';
 import { DesignSystemPage } from './pages/DesignSystemPage.js';
 import { LocalDbPocPage } from './pages/LocalDbPocPage.js';
 import { NotFoundPage } from './pages/NotFoundPage.js';
+import { SummaryPage } from './pages/summary/SummaryPage.js';
 import { AppShell } from './shell/AppShell.js';
 import { NAV_ITEMS, SECONDARY_NAV_ITEMS } from './shell/Sidebar.js';
 
@@ -10,7 +11,7 @@ import { NAV_ITEMS, SECONDARY_NAV_ITEMS } from './shell/Sidebar.js';
 export function appRoutes(options: { readonly withDesignSystem: boolean }): RouteObject[] {
   const screens = [...NAV_ITEMS, ...SECONDARY_NAV_ITEMS].map(({ to, label }) =>
     to === '/'
-      ? { index: true, element: <ComingSoonPage title={label} /> }
+      ? { index: true, element: <SummaryPage /> }
       : { path: to.slice(1), element: <ComingSoonPage title={label} /> },
   );
   return [

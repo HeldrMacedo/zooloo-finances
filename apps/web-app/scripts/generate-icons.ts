@@ -9,7 +9,7 @@ import { markSvg, rasterizeMark } from './provisional-mark.ts';
  * vetores definitivos chegarem, só este script e `ZoolooLogo` mudam. Rode `pnpm icons`.
  */
 const out = fileURLToPath(new URL('../public/icons/', import.meta.url));
-const colors = { circle: color.teal, glyph: color.midnight };
+const colors = { circle: color.teal, glyph: color.white };
 
 const png = (size: number, scale: number, background: string | null) =>
   encodePng(size, size, rasterizeMark({ ...colors, size, scale, background }));

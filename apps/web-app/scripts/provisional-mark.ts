@@ -1,7 +1,7 @@
 import { parseHexColor } from '@zooloo/ui-tokens';
 
 /**
- * Símbolo PROVISÓRIO (doc 13 §7.1): círculo Teal com "Z" em Midnight. Sai quando chegarem os
+ * Símbolo PROVISÓRIO (doc 13 §7.1): círculo Teal com "Z" branco. Sai quando chegarem os
  * vetores da coruja; até lá todo ícone vem daqui e de `src/ui/brand/ZoolooLogo.tsx`.
  * Geometria em unidades de 0 a 1, compartilhada entre o SVG e o rasterizador dos PNGs.
  */

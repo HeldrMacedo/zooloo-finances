@@ -6,7 +6,7 @@
   min-height: 2.5rem;
   padding: 0 var(--zl-space-4);
   border: 1px solid transparent;
-  border-radius: var(--zl-radius-sm);
+  border-radius: 0.6875rem;
   font-weight: 600;
   font-size: var(--zl-text-sm);
   line-height: 1;
@@ -14,7 +14,12 @@
   cursor: pointer;
   transition:
     background-color 120ms ease,
-    border-color 120ms ease;
+    border-color 120ms ease,
+    transform 120ms ease;
+}
+
+.button:active:not(:disabled) {
+  transform: scale(0.97);
 }
 
 .button:disabled {
@@ -43,19 +48,24 @@
 .primary {
   background: var(--zl-primary);
   color: var(--zl-primary-text);
+  box-shadow: var(--zl-shadow);
 }
 
 .primary:hover:not(:disabled) {
-  background: color-mix(in srgb, var(--zl-primary) 85%, var(--zl-brand-midnight-900));
+  background: color-mix(in srgb, var(--zl-primary) 90%, var(--zl-background));
 }
 
 .secondary {
   background: var(--zl-surface);
   color: var(--zl-text);
-  border-color: var(--zl-border-strong);
+  border-color: var(--zl-border);
+  box-shadow: var(--zl-shadow);
 }
 
-.secondary:hover:not(:disabled),
+.secondary:hover:not(:disabled) {
+  border-color: var(--zl-accent);
+}
+
 .ghost:hover:not(:disabled) {
   background: var(--zl-hover);
 }

@@ -2,8 +2,10 @@
   display: grid;
   gap: var(--zl-space-4);
   align-content: start;
-  padding: var(--zl-space-6);
-  border-radius: var(--zl-radius-lg);
+  min-width: 0;
+  padding: 1.125rem;
+  border: 1px solid var(--zl-border);
+  border-radius: var(--zl-radius-xl);
   background: var(--zl-surface);
   box-shadow: var(--zl-shadow);
 }
@@ -22,6 +24,6 @@
 
 .title {
   font-family: var(--zl-font-ui);
-  font-size: var(--zl-text-md);
+  font-size: var(--zl-text-sm);
   font-weight: 600;
 }

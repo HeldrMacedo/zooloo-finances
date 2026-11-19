@@ -4,7 +4,7 @@ import { describe, expect, it } from 'vitest';
 import { encodePng } from './png.ts';
 import { markSvg, rasterizeMark } from './provisional-mark.ts';
 
-const colors = { circle: color.teal, glyph: color.midnight };
+const colors = { circle: color.teal, glyph: color.white };
 
 function pixel(rgba: Uint8Array, size: number, x: number, y: number): number[] {
   const offset = (y * size + x) * 4;
@@ -20,12 +20,12 @@ describe('rasterizeMark', () => {
   const size = 100;
   const transparent = rasterizeMark({ ...colors, size, scale: 1, background: null });
 
-  it('canto transparente, círculo Teal e "Z" Midnight', () => {
+  it('canto transparente, círculo Teal e "Z" branco', () => {
     expect(pixel(transparent, size, 0, 0)).toEqual([0, 0, 0, 0]);
     expect(pixel(transparent, size, 50, 15)).toEqual(rgb(color.teal));
     // Centro da diagonal do Z e meio da barra de cima.
-    expect(pixel(transparent, size, 50, 50)).toEqual(rgb(color.midnight));
-    expect(pixel(transparent, size, 50, 34)).toEqual(rgb(color.midnight));
+    expect(pixel(transparent, size, 50, 50)).toEqual(rgb(color.white));
+    expect(pixel(transparent, size, 50, 34)).toEqual(rgb(color.white));
   });
 
   it('maskable: fundo opaco nos cantos e símbolo dentro da área segura', () => {
@@ -65,7 +65,7 @@ describe('markSvg', () => {
   it('SVG com as cores dos tokens', () => {
     const svg = markSvg(colors);
     expect(svg).toContain(`fill="${color.teal}"`);
-    expect(svg).toContain(`fill="${color.midnight}"`);
+    expect(svg).toContain(`fill="${color.white}"`);
     expect(svg).toMatch(/^<svg xmlns="http:\/\/www\.w3\.org\/2000\/svg"/);
   });
 });

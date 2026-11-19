@@ -135,3 +135,52 @@ describe('preferências da topbar', () => {
     Reflect.deleteProperty(navigator, 'onLine');
   });
 });
+
+describe('menu lateral (doc 13 §5.1)', () => {
+  it('no desktop, o botão de menu recolhe para trilho de ícones e é lembrado', async () => {
+    renderApp('/');
+    const toggle = screen.getByRole('button', { name: 'Recolher ou expandir menu' });
+    expect(toggle.getAttribute('aria-expanded')).toBe('true');
+    await userEvent.click(toggle);
+    expect(toggle.getAttribute('aria-expanded')).toBe('false');
+    expect(localStorage.getItem('zl-sidebar-collapsed')).toBe('1');
+    // Recolhido, os itens seguem acessíveis pelo nome.
+    expect(screen.getByRole('link', { name: 'Contas' })).toBeDefined();
+    await userEvent.click(toggle);
+    expect(localStorage.getItem('zl-sidebar-collapsed')).toBe('0');
+  });
+
+  it('em telas menores vira gaveta: abre pelo botão, fecha com Esc, botão X ou ao navegar', async () => {
+    const original = window.matchMedia;
+    window.matchMedia = ((media: string) => ({
+      matches: false,
+      media,
+      addEventListener: () => undefined,
+      removeEventListener: () => undefined,
+    })) as unknown as typeof window.matchMedia;
+    try {
+      renderApp('/');
+      const toggle = screen.getByRole('button', { name: 'Recolher ou expandir menu' });
+      // Gaveta fechada fica fora da ordem de foco.
+      const drawer = screen.getByRole('navigation', { name: 'Menu principal' }).closest('aside');
+      expect(drawer?.hasAttribute('inert')).toBe(true);
+
+      await userEvent.click(toggle);
+      expect(toggle.getAttribute('aria-expanded')).toBe('true');
+      expect(drawer?.hasAttribute('inert')).toBe(false);
+      await userEvent.keyboard('{Escape}');
+      expect(toggle.getAttribute('aria-expanded')).toBe('false');
+
+      await userEvent.click(toggle);
+      await userEvent.click(screen.getByRole('button', { name: 'Fechar menu' }));
+      expect(toggle.getAttribute('aria-expanded')).toBe('false');
+
+      await userEvent.click(toggle);
+      await userEvent.click(screen.getByRole('link', { name: 'Contas' }));
+      expect(screen.getByRole('heading', { level: 1, name: 'Contas' })).toBeDefined();
+      expect(toggle.getAttribute('aria-expanded')).toBe('false');
+    } finally {
+      window.matchMedia = original;
+    }
+  });
+});

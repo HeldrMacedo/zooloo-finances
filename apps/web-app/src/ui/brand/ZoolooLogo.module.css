@@ -1,39 +1,49 @@
 .logo {
   display: inline-flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.7rem;
+  min-width: 0;
   color: var(--zl-text);
 }
 
-.negative {
-  color: var(--zl-brand-white);
+/* Quadrado Midnight em qualquer tema: o símbolo não muda de cor (doc 13 §1). */
+.badge {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 2.375rem;
+  height: 2.375rem;
+  border: 1px solid color-mix(in srgb, var(--zl-brand-teal-300) 30%, transparent);
+  border-radius: var(--zl-radius-md);
+  background: var(--zl-brand-midnight);
 }
 
 /* Tamanho mínimo do símbolo: 24 px (doc 13 §1). */
 .mark {
-  width: 2rem;
-  height: 2rem;
-  flex: none;
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
 .wordmark {
-  display: inline-grid;
-  justify-items: stretch;
-  line-height: 1;
+  display: grid;
+  min-width: 0;
+  line-height: 1.2;
 }
 
 .word {
   font-family: var(--zl-font-display);
-  font-weight: 800;
-  font-size: 1.35rem;
+  font-size: 0.95rem;
+  font-weight: 700;
   letter-spacing: -0.02em;
+  white-space: nowrap;
 }
 
-/* "FINANÇAS" espaçado e alinhado à largura da palavra (doc 13 §1). */
 .descriptor {
-  font-size: 0.56rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.32em;
-  margin-top: 0.15rem;
+  color: var(--zl-link);
+}
+
+.tagline {
+  font-size: 0.6875rem;
+  color: var(--zl-text-muted);
+  white-space: nowrap;
 }

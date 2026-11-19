@@ -1,29 +1,39 @@
 /* Base do app. Cores e escala vêm de virtual:zooloo-tokens.css (doc 13 §6); aqui só derivados. */
 :root {
-  --zl-border: color-mix(in srgb, var(--zl-text) 12%, transparent);
-  --zl-border-strong: color-mix(in srgb, var(--zl-text) 28%, transparent);
-  --zl-hover: color-mix(in srgb, var(--zl-text) 6%, transparent);
-  --zl-shadow: 0 1px 2px color-mix(in srgb, var(--zl-brand-midnight) 8%, transparent);
+  --zl-hover: color-mix(in srgb, var(--zl-text) 5%, transparent);
+  --zl-shadow: 0 2px 10px color-mix(in srgb, var(--zl-brand-midnight) 4%, transparent);
+  --zl-shadow-elevated: 0 12px 32px color-mix(in srgb, var(--zl-brand-midnight) 14%, transparent);
+  --zl-overlay: color-mix(in srgb, var(--zl-brand-midnight-950) 48%, transparent);
   --zl-focus: var(--zl-link);
-  --zl-topbar-height: 3.5rem;
-  --zl-sidebar-width: 15rem;
+  --zl-sidebar-width: 15.5rem;
+  --zl-sidebar-collapsed-width: 4.75rem;
   --zl-space-1: 0.25rem;
   --zl-space-2: 0.5rem;
   --zl-space-3: 0.75rem;
   --zl-space-4: 1rem;
+  --zl-space-5: 1.25rem;
   --zl-space-6: 1.5rem;
   --zl-space-8: 2rem;
-  /* Card de destaque: Mint no claro; no escuro, Midnight levemente tingido de Teal. */
-  --zl-highlight: var(--zl-nav-active);
+  /* Card de destaque: subcard Sand no claro, Midnight-700 no escuro. */
+  --zl-highlight: var(--zl-surface-muted);
+  /* Fundos translúcidos dos selos (receita, aviso, despesa, info). */
+  --zl-badge-income: color-mix(in srgb, var(--zl-income) 12%, transparent);
+  --zl-badge-warning: color-mix(in srgb, var(--zl-warning) 16%, transparent);
+  --zl-badge-expense: color-mix(in srgb, var(--zl-expense) 12%, transparent);
+  --zl-badge-info: color-mix(in srgb, var(--zl-accent) 12%, transparent);
 }
 
 :root[data-theme='dark'] {
-  --zl-highlight: color-mix(in srgb, var(--zl-brand-teal) 14%, var(--zl-surface));
+  --zl-shadow: 0 4px 16px rgb(0 0 0 / 22%);
+  --zl-shadow-elevated: 0 16px 40px rgb(0 0 0 / 45%);
+  --zl-overlay: rgb(4 12 19 / 68%);
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme]) {
-    --zl-highlight: color-mix(in srgb, var(--zl-brand-teal) 14%, var(--zl-surface));
+    --zl-shadow: 0 4px 16px rgb(0 0 0 / 22%);
+    --zl-shadow-elevated: 0 16px 40px rgb(0 0 0 / 45%);
+    --zl-overlay: rgb(4 12 19 / 68%);
   }
 }
 

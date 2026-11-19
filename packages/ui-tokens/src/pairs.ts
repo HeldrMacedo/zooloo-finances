@@ -8,21 +8,22 @@ export interface ColorPair {
 }
 
 function themeTextPairs(label: string, theme: Theme): ColorPair[] {
+  const backgrounds = [
+    ['fundo', theme.background],
+    ['menu', theme.sidebar],
+    ['card', theme.surface],
+    ['subcard', theme.surfaceMuted],
+  ] as const;
   return [
-    { name: `${label}: texto/fundo`, foreground: theme.text, background: theme.background },
-    { name: `${label}: texto/card`, foreground: theme.text, background: theme.surface },
-    {
-      name: `${label}: secundário/fundo`,
-      foreground: theme.textMuted,
-      background: theme.background,
-    },
-    { name: `${label}: secundário/card`, foreground: theme.textMuted, background: theme.surface },
-    { name: `${label}: topbar`, foreground: theme.topbarText, background: theme.topbar },
+    ...backgrounds.flatMap(([where, background]) => [
+      { name: `${label}: texto/${where}`, foreground: theme.text, background },
+      { name: `${label}: secundário/${where}`, foreground: theme.textMuted, background },
+      { name: `${label}: link/${where}`, foreground: theme.link, background },
+      { name: `${label}: receita/${where}`, foreground: theme.income, background },
+      { name: `${label}: despesa/${where}`, foreground: theme.expense, background },
+    ]),
     { name: `${label}: menu ativo`, foreground: theme.navActiveText, background: theme.navActive },
     { name: `${label}: botão primário`, foreground: theme.primaryText, background: theme.primary },
-    { name: `${label}: link/card`, foreground: theme.link, background: theme.surface },
-    { name: `${label}: receita/card`, foreground: theme.income, background: theme.surface },
-    { name: `${label}: despesa/card`, foreground: theme.expense, background: theme.surface },
     { name: `${label}: aviso`, foreground: theme.warningText, background: theme.warning },
     { name: `${label}: info/card`, foreground: theme.info, background: theme.surface },
   ];
@@ -32,15 +33,18 @@ function themeTextPairs(label: string, theme: Theme): ColorPair[] {
 export const TEXT_PAIRS: readonly ColorPair[] = [
   ...themeTextPairs('claro', lightTheme),
   ...themeTextPairs('escuro', darkTheme),
-  { name: 'Midnight/Mint', foreground: color.midnight, background: color.mint },
-  { name: 'Midnight/Teal', foreground: color.midnight, background: color.teal },
-  { name: 'Teal/Midnight', foreground: color.teal, background: color.midnight },
+  { name: 'branco/Midnight', foreground: color.white, background: color.midnight },
+  { name: 'branco/Teal', foreground: color.white, background: color.teal },
+  { name: 'Midnight-900/Sun', foreground: color['midnight-900'], background: color.sun },
 ];
 
 /** Pares proibidos para texto (doc 13 §2.3): servem só para ícones, barras e bordas. */
 export const GRAPHIC_ONLY_PAIRS: readonly ColorPair[] = [
-  { name: 'branco/Teal', foreground: color.white, background: color.teal },
-  { name: 'Teal/branco', foreground: color.teal, background: color.surface },
-  { name: 'Teal/Warm White', foreground: color.teal, background: color['warm-white'] },
-  { name: 'Sun/branco', foreground: color.sun, background: color.surface },
+  { name: 'Midnight/Teal', foreground: color.midnight, background: color.teal },
+  { name: 'Sun/Sand-50', foreground: color.sun, background: color['sand-50'] },
+  {
+    name: 'Teal-400/Midnight-800',
+    foreground: color['teal-400'],
+    background: color['midnight-800'],
+  },
 ];

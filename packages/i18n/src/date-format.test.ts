@@ -9,6 +9,10 @@ describe('formatLocalDate (pt-BR)', () => {
     expect(formatLocalDate(date)).toBe('08/11/2026');
   });
 
+  it('dia e mês: dd/mm, para listas do mês corrente', () => {
+    expect(formatLocalDate(date, 'dayMonth')).toBe('08/11');
+  });
+
   it('longo: dia de mês de ano', () => {
     expect(formatLocalDate(date, 'long')).toBe('8 de novembro de 2026');
   });

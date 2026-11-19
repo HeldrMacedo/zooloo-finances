@@ -1,4 +1,4 @@
-import { darkTheme, lightTheme } from '@zooloo/ui-tokens';
+import { chartSequence, chartSequenceDark, darkTheme, lightTheme } from '@zooloo/ui-tokens';
 import { describe, expect, it } from 'vitest';
 import { TOKENS_MODULE_ID, tokensCss, zoolooTokensPlugin } from './tokens-css.ts';
 
@@ -13,12 +13,17 @@ describe('tokensCss', () => {
     expect(css.split(`--zl-background: ${darkTheme.background};`)).toHaveLength(3);
   });
 
+  it('cores de gráfico por tema', () => {
+    expect(css).toContain(`--zl-chart-1: ${chartSequence[0]};`);
+    expect(css.split(`--zl-chart-1: ${chartSequenceDark[0]};`)).toHaveLength(3);
+  });
+
   it('fontes, raios, escala e cores da marca', () => {
     expect(css).toContain("--zl-font-display: 'Plus Jakarta Sans Variable'");
     expect(css).toContain("--zl-font-ui: 'Inter Variable'");
     expect(css).toContain('--zl-radius-lg: 16px;');
     expect(css).toContain('--zl-text-md: 1rem;');
-    expect(css).toContain('--zl-brand-teal: #16B89A;');
+    expect(css).toContain('--zl-brand-teal: #2D6E85;');
     // Tokens compostos (income/expense) ficam só nos temas.
     expect(css).not.toContain('--zl-brand-income');
   });

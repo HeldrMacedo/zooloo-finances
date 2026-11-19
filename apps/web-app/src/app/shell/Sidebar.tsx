@@ -11,8 +11,11 @@ import {
   Settings,
   Tags,
   Wallet,
+  X,
 } from 'lucide-react';
 import { NavLink } from 'react-router';
+import { ZoolooLogo } from '../../ui/brand/ZoolooLogo.js';
+import { SyncStatus } from '../../ui/sync/SyncStatus.js';
 import styles from './Sidebar.module.css';
 
 const linkClass = styles['link'] ?? '';
@@ -40,13 +43,25 @@ export const SECONDARY_NAV_ITEMS: readonly NavItem[] = [
   { to: '/configuracoes', label: t('nav.settings'), icon: Settings },
 ];
 
-function NavList({ items }: { readonly items: readonly NavItem[] }) {
+function NavList({
+  items,
+  onNavigate,
+}: {
+  readonly items: readonly NavItem[];
+  readonly onNavigate: () => void;
+}) {
   return (
     <ul className={styles.list}>
       {items.map(({ to, label, icon: Icon }) => (
         <li key={to}>
-          <NavLink to={to} end={to === '/'} className={linkClass}>
-            <Icon aria-hidden="true" size={18} />
+          <NavLink
+            to={to}
+            end={to === '/'}
+            className={linkClass}
+            title={label}
+            onClick={onNavigate}
+          >
+            <Icon aria-hidden="true" size={19} />
             <span className={styles.label}>{label}</span>
           </NavLink>
         </li>
@@ -55,12 +70,47 @@ function NavList({ items }: { readonly items: readonly NavItem[] }) {
   );
 }
 
-/** Menu lateral (doc 13 §5.1): fundo claro, item ativo em Mint. Vira trilho de ícones em telas médias. */
-export function Sidebar() {
+export interface SidebarProps {
+  /** Desktop: trilho só com ícones. */
+  readonly collapsed: boolean;
+  /** Telas menores: gaveta aberta sobre o conteúdo. */
+  readonly drawerOpen: boolean;
+  /** Gaveta fechada fica fora da ordem de foco. */
+  readonly inert: boolean;
+  readonly onClose: () => void;
+}
+
+/**
+ * Menu lateral (doc 13 §5.1): altura total, marca no topo, item ativo Midnight e sync no rodapé.
+ * Recolhe para trilho de ícones no desktop e vira gaveta abaixo de 1024 px.
+ */
+export function Sidebar({ collapsed, drawerOpen, inert, onClose }: SidebarProps) {
   return (
-    <nav className={styles.sidebar} aria-label={t('shell.mainNav')}>
-      <NavList items={NAV_ITEMS} />
-      <NavList items={SECONDARY_NAV_ITEMS} />
-    </nav>
+    <aside
+      className={styles.sidebar}
+      data-collapsed={collapsed || undefined}
+      data-open={drawerOpen || undefined}
+      inert={inert}
+    >
+      <div className={styles.brand}>
+        <ZoolooLogo variant={collapsed ? 'mark' : 'horizontal'} tagline={t('shell.brandTagline')} />
+        <button
+          type="button"
+          className={styles.close}
+          onClick={onClose}
+          title={t('shell.closeMenu')}
+        >
+          <X aria-hidden="true" size={18} />
+          <span className="visually-hidden">{t('shell.closeMenu')}</span>
+        </button>
+      </div>
+      <nav className={styles.nav} aria-label={t('shell.mainNav')}>
+        <NavList items={NAV_ITEMS} onNavigate={onClose} />
+        <NavList items={SECONDARY_NAV_ITEMS} onNavigate={onClose} />
+      </nav>
+      <div className={styles.footer}>
+        <SyncStatus pending={0} />
+      </div>
+    </aside>
   );
 }

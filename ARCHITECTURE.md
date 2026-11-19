@@ -45,7 +45,10 @@ Em dev e teste os pacotes são lidos de `src/` pela condição de export `@zoolo
 - `src/app/`: shell, rotas e páginas. Telas do menu ainda não construídas usam `ComingSoonPage`.
 - Valor monetário na tela só por `<Amount>` (sinal, cor e nome acessível de entrada/saída; modo privado).
 - Ícones e logotipo provisórios (doc 13 §7.1): `pnpm --filter @zooloo/web-app icons` gera `public/icons/`; a troca pelos vetores definitivos acontece só em `scripts/provisional-mark.ts` e `src/ui/brand/ZoolooLogo.tsx`.
-- Vitrine do design system em `/app/design`, só em desenvolvimento, para revisão visual por pessoas e agentes.
+- Vitrine do design system em `/app/design` e PoC do banco local em `/app/dev/banco-local`, só em desenvolvimento e no build de E2E.
+- Banco local (ADR-0006): `src/data/local-db/`. SQLite WASM em Web Worker (`opfs-sahpool`), aba líder por Web Locks, demais abas pelo BroadcastChannel, Drizzle `sqlite-proxy` via `useLocalDb().orm`. Tabelas e migrações de `@zooloo/db-schema/local`.
+- Service Worker (`src/sw.ts`, Serwist): precache do app shell, sem cache de `/api` (RNF-PWA-04).
+- E2E: `pnpm --filter @zooloo/web-app test:e2e` (Playwright, build de produção com `--mode e2e`).
 
 ## Banco de dados
 

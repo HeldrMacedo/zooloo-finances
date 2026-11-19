@@ -44,6 +44,22 @@ jobs:
             exit 1
           }
 
+  e2e:
+    name: E2E do PWA (Playwright)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter @zooloo/web-app exec playwright install --with-deps chromium
+      - run: pnpm --filter @zooloo/web-app test:e2e
+        env:
+          PLAYWRIGHT_CHANNELS: chromium
+
   mutation:
     name: Mutação do núcleo financeiro
     runs-on: ubuntu-latest

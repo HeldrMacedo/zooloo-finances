@@ -17,6 +17,11 @@
       "@zooloo/source": "./src/pg/migrate.ts",
       "types": "./dist/pg/migrate.d.ts",
       "default": "./dist/pg/migrate.js"
+    },
+    "./local": {
+      "@zooloo/source": "./src/local.ts",
+      "types": "./dist/local.d.ts",
+      "default": "./dist/local.js"
     }
   },
   "scripts": {
@@ -24,7 +29,7 @@
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
-    "db:generate": "drizzle-kit generate --config drizzle.pg.config.ts && drizzle-kit generate --config drizzle.sqlite.config.ts"
+    "db:generate": "drizzle-kit generate --config drizzle.pg.config.ts && drizzle-kit generate --config drizzle.sqlite.config.ts && node scripts/bundle-sqlite-migrations.ts && prettier --write src/sqlite/migrations.generated.ts"
   },
   "devDependencies": {
     "@testcontainers/postgresql": "12.2.1",
@@ -33,7 +38,8 @@
     "@zooloo/vitest-config": "workspace:*",
     "drizzle-kit": "0.31.11",
     "typescript": "6.0.3",
-    "vitest": "5.1.0"
+    "vitest": "5.1.0",
+    "prettier": "3.10.1"
   },
   "dependencies": {
     "drizzle-orm": "0.45.4",

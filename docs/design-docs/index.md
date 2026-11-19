@@ -8,3 +8,4 @@
 | [adr-0003-regiao-de-hospedagem.md](adr-0003-regiao-de-hospedagem.md) | aceito | 2026-11-18 |
 | [adr-0004-pacotes-internos-sem-build.md](adr-0004-pacotes-internos-sem-build.md) | aceito | 2026-11-18 |
 | [adr-0005-isolamento-por-rls.md](adr-0005-isolamento-por-rls.md) | aceito | 2026-11-18 |
+| [adr-0006-poc-pwa-offline.md](adr-0006-poc-pwa-offline.md) | aceito (Chrome/Edge); Safari pendente | 2026-11-19 |

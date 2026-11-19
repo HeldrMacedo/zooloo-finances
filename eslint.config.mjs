@@ -12,6 +12,8 @@ export default tseslint.config(
   {
     ignores: [
       '**/dist/**',
+      '**/dist-e2e/**',
+      '**/test-results/**',
       '**/coverage/**',
       '**/reports/**',
       '**/.stryker-tmp/**',
@@ -72,7 +74,9 @@ export default tseslint.config(
   },
   {
     files: ['apps/web-app/src/**/*.{ts,tsx}', 'apps/web-app/public/**/*.js'],
-    languageOptions: { globals: { ...globals.browser } },
+    languageOptions: {
+      globals: { ...globals.browser, ...globals.worker, ...globals.serviceworker },
+    },
   },
   {
     files: ['packages/domain/src/**/*.ts'],
@@ -119,7 +123,11 @@ export default tseslint.config(
   },
   {
     // Scripts de geração gravam em pastas fixas do próprio repositório.
-    files: ['apps/*/scripts/**/*.ts'],
+    files: [
+      'apps/*/scripts/**/*.ts',
+      'packages/*/scripts/**/*.ts',
+      'packages/db-schema/src/sqlite/bundle-migrations.ts',
+    ],
     rules: { 'security/detect-non-literal-fs-filename': 'off' },
   },
 );

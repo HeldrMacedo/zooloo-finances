@@ -8,5 +8,10 @@ reports/
 .env
 .env.*
 !.env.example
+# Só liga ferramentas de dev no build de E2E; sem segredos.
+!.env.e2e
 .claude/settings.local.json
 .claude/.headroom*
+dist-e2e/
+test-results/
+playwright-report/

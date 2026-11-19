@@ -9,5 +9,6 @@
     "noEmit": true,
     "declaration": false
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": ["src/sw.ts", "src/data/local-db/db.worker.ts"]
 }

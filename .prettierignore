@@ -6,3 +6,6 @@ docs/
 brand/
 *.md
 packages/db-schema/migrations/
+dist-e2e/
+test-results/
+playwright-report/

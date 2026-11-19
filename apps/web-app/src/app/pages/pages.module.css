@@ -33,3 +33,9 @@
   color: var(--zl-text-muted);
   max-width: 60ch;
 }
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--zl-space-3);
+}

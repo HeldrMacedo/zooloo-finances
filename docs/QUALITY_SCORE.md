@@ -13,3 +13,4 @@ Atualizado por agentes de manutenção (doc 12 §8). Metas: doc 04 §7A.
 | `@zooloo/api` | API e workers | 100% / 100% (meta 90) | — | limpo | A | 2026-11-18 |
 | `@zooloo/dev-worktree` | ferramenta | 100% / 100% (meta 90) | — | limpo | A | 2026-11-18 |
 | `@zooloo/web-app` | UI Web/PWA | 99% / 94% (meta 70) | — | limpo; axe sem violações | A | 2026-11-18 |
+| `@zooloo/web-app` (PoC 1) | UI Web/PWA | 99,7% / 94% (meta 70); E2E 12/12 Chrome e Edge | — | limpo | A | 2026-11-19 |

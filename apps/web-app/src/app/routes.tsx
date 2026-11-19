@@ -1,6 +1,7 @@
 import type { RouteObject } from 'react-router';
 import { ComingSoonPage } from './pages/ComingSoonPage.js';
 import { DesignSystemPage } from './pages/DesignSystemPage.js';
+import { LocalDbPocPage } from './pages/LocalDbPocPage.js';
 import { NotFoundPage } from './pages/NotFoundPage.js';
 import { AppShell } from './shell/AppShell.js';
 import { NAV_ITEMS, SECONDARY_NAV_ITEMS } from './shell/Sidebar.js';
@@ -18,7 +19,12 @@ export function appRoutes(options: { readonly withDesignSystem: boolean }): Rout
       element: <AppShell />,
       children: [
         ...screens,
-        ...(options.withDesignSystem ? [{ path: 'design', element: <DesignSystemPage /> }] : []),
+        ...(options.withDesignSystem
+          ? [
+              { path: 'design', element: <DesignSystemPage /> },
+              { path: 'dev/banco-local', element: <LocalDbPocPage /> },
+            ]
+          : []),
         { path: '*', element: <NotFoundPage /> },
       ],
     },

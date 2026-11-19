@@ -15,5 +15,7 @@
 | TD-012 | Lista oficial de categorias padrão do onboarding (RF-ONB-02) não definida pelo produto; o seed de dev usa um conjunto sintético | passo 10 | média (antes do onboarding) |
 | TD-013 | `dev:worktree` não detecta colisão de porta entre duas worktrees que caiam no mesmo slot (chance ~1/1000 por par); hoje o Docker falha com "port is already allocated" | passo 10 | baixa |
 | TD-014 | `<ZoolooLogo>` está em `apps/web-app/src/ui/brand`, não em `@zooloo/ui-tokens` como diz o doc 13 §7.1: o pacote de tokens é consumido também pelo mobile (React Native), que não usa SVG do DOM. Atualizar o doc 13 ou criar `@zooloo/ui-web` quando houver segundo consumidor web (`apps/site`) | passo 11 | baixa |
-| TD-015 | Sem E2E com Playwright ainda (RNF-QA-05); a revisão visual do passo 11 foi feita com Chrome headless e capturas manuais. Montar Playwright com Chrome, Edge e WebKit junto da PoC 1 (PWA offline) | passo 11 | média |
+| TD-015 | Playwright E2E existe só para a PoC 1 (Chrome e Edge); falta WebKit e cobertura dos fluxos F1–F8 conforme forem implementados | passo 12 | média |
 | TD-016 | Fonte Nunito (Zooloo Kids, doc 13 §3) não empacotada; só entra na Fase 5 | passo 11 | baixa |
+| TD-017 | PoC 1 sem validação em Safari 17+/macOS 14+ e sem instalação real do PWA (clique em "Instalar"/"Adicionar ao Dock") | ADR-0006 | alta (antes do beta) |
+| TD-018 | Precache inclui `sqlite3-worker1` (~216 kB) não usado pelo app | ADR-0006 | baixa |

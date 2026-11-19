@@ -11,6 +11,7 @@ export default mergeConfig(base, {
   resolve: { conditions: ['@zooloo/source', 'module', 'browser', 'development|production'] },
   test: {
     environment: 'jsdom',
+    exclude: ['e2e/**', 'node_modules/**'],
     include: ['src/**/*.test.{ts,tsx}', 'scripts/**/*.test.ts', 'build/**/*.test.ts'],
     setupFiles: ['./src/testing/setup.ts'],
     css: { modules: { classNameStrategy: 'non-scoped' } },
@@ -27,6 +28,11 @@ export default mergeConfig(base, {
         'scripts/generate-icons.ts',
         // Vitrine de desenvolvimento, fora do build de produção.
         'src/app/pages/DesignSystemPage.tsx',
+        // Rodam só em navegador real (Worker, OPFS, Service Worker): cobertos pelo E2E (e2e/).
+        'src/app/pages/LocalDbPocPage.tsx',
+        'src/data/local-db/db.worker.ts',
+        'src/data/local-db/create.ts',
+        'src/sw.ts',
       ],
     },
   },

@@ -5,6 +5,7 @@ import { DESKTOP_MEDIA, useMediaQuery } from '../../ui/media/useMediaQuery.js';
 import styles from './AppShell.module.css';
 import { SelectedMonthProvider } from './SelectedMonth.js';
 import { Sidebar } from './Sidebar.js';
+import { SyncNotice } from './SyncNotice.js';
 import { Topbar } from './Topbar.js';
 import { useShortcuts } from './useShortcuts.js';
 
@@ -85,6 +86,7 @@ export function AppShell() {
             menuExpanded={desktop ? !collapsed : drawerOpen}
           />
           <main id="conteudo" className={styles.main} tabIndex={-1}>
+            <SyncNotice />
             <Outlet />
           </main>
         </div>

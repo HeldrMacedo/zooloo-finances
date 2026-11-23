@@ -3,6 +3,7 @@ import axe from 'axe-core';
 import type { ReactElement } from 'react';
 import { createMemoryRouter, RouterProvider } from 'react-router';
 import { appRoutes } from '../app/routes.js';
+import { SyncProvider, type SyncProviderProps } from '../data/sync/SyncContext.js';
 import { PrivacyProvider } from '../ui/privacy/PrivacyContext.js';
 import { ThemeProvider } from '../ui/theme/ThemeContext.js';
 
@@ -14,13 +15,25 @@ export function withProviders(ui: ReactElement): ReactElement {
   );
 }
 
+export interface RenderAppOptions {
+  readonly withDesignSystem?: boolean;
+  /** Banco local e transporte do sync; sem eles o app roda sem banco local. */
+  readonly sync?: Omit<SyncProviderProps, 'children'>;
+}
+
 /** Renderiza o app inteiro numa rota, com os mesmos providers de `main.tsx`. */
-export function renderApp(path = '/', options: { withDesignSystem?: boolean } = {}) {
+export function renderApp(path = '/', options: RenderAppOptions = {}) {
   const router = createMemoryRouter(
     appRoutes({ withDesignSystem: options.withDesignSystem ?? false }),
     { initialEntries: [path] },
   );
-  return { router, ...render(withProviders(<RouterProvider router={router} />)) };
+  const app = <RouterProvider router={router} />;
+  return {
+    router,
+    ...render(
+      withProviders(options.sync ? <SyncProvider {...options.sync}>{app}</SyncProvider> : app),
+    ),
+  };
 }
 
 /**

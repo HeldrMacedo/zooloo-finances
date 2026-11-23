@@ -14,6 +14,7 @@ import {
   X,
 } from 'lucide-react';
 import { NavLink } from 'react-router';
+import { useSync } from '../../data/sync/SyncContext.js';
 import { ZoolooLogo } from '../../ui/brand/ZoolooLogo.js';
 import { SyncStatus } from '../../ui/sync/SyncStatus.js';
 import styles from './Sidebar.module.css';
@@ -85,6 +86,7 @@ export interface SidebarProps {
  * Recolhe para trilho de ícones no desktop e vira gaveta abaixo de 1024 px.
  */
 export function Sidebar({ collapsed, drawerOpen, inert, onClose }: SidebarProps) {
+  const { state } = useSync();
   return (
     <aside
       className={styles.sidebar}
@@ -109,7 +111,7 @@ export function Sidebar({ collapsed, drawerOpen, inert, onClose }: SidebarProps)
         <NavList items={SECONDARY_NAV_ITEMS} onNavigate={onClose} />
       </nav>
       <div className={styles.footer}>
-        <SyncStatus pending={0} />
+        <SyncStatus pending={state.pending} phase={state.phase} />
       </div>
     </aside>
   );

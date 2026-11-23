@@ -7,6 +7,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router';
 import { appRoutes } from './app/routes.js';
 import { createBrowserLocalDb } from './data/local-db/create.js';
 import { LocalDbProvider } from './data/local-db/LocalDbContext.js';
+import { AppSyncProvider } from './data/sync/SyncContext.js';
 import { registerServiceWorker } from './pwa/register.js';
 import { PrivacyProvider } from './ui/privacy/PrivacyContext.js';
 import { ThemeProvider } from './ui/theme/ThemeContext.js';
@@ -31,7 +32,9 @@ createRoot(root).render(
     <ThemeProvider>
       <PrivacyProvider>
         <LocalDbProvider coordinator={localDb}>
-          <RouterProvider router={router} />
+          <AppSyncProvider>
+            <RouterProvider router={router} />
+          </AppSyncProvider>
         </LocalDbProvider>
       </PrivacyProvider>
     </ThemeProvider>

@@ -33,8 +33,6 @@ export default defineConfig({
     }),
   ],
   resolve: { conditions },
-  // O sqlite-wasm resolve o .wasm por `new URL(..., import.meta.url)`: não pode ser pré-empacotado.
-  optimizeDeps: { exclude: ['@sqlite.org/sqlite-wasm'] },
   worker: { format: 'es' },
   server: {
     host: '127.0.0.1',

@@ -19,6 +19,8 @@ export default tseslint.config(
       '**/.stryker-tmp/**',
       'docs/**',
       'brand/**',
+      // Código de terceiros com hash fixo (apps/web-app/vendor/*/SOURCE.md); não é editado aqui.
+      '**/vendor/**',
     ],
   },
   js.configs.recommended,

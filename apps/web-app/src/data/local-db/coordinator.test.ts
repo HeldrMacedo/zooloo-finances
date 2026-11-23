@@ -60,7 +60,13 @@ function sharedStore() {
   const rows: string[] = [];
   const executed: QueryRequest[] = [];
   const engine = (): LocalDbEngine => ({
-    storage: { vfs: 'opfs-sahpool', file: '/zooloo.sqlite3', migrated: [] },
+    storage: {
+      vfs: 'opfs-sahpool',
+      file: '/zooloo.sqlite3',
+      migrated: [],
+      cipher: 'sqlcipher',
+      recreated: false,
+    },
     async execute(request) {
       executed.push(request);
       if (request.sql.startsWith('INSERT')) {

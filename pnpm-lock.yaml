@@ -314,9 +314,6 @@ importers:
       '@fontsource-variable/plus-jakarta-sans':
         specifier: 5.3.0
         version: 5.3.0
-      '@sqlite.org/sqlite-wasm':
-        specifier: 3.54.1-build1
-        version: 3.54.1-build1
       '@zooloo/db-schema':
         specifier: workspace:*
         version: link:../../packages/db-schema
@@ -360,6 +357,9 @@ importers:
       '@serwist/vite':
         specifier: 9.5.15
         version: 9.5.15(browserslist@4.29.6)(typescript@6.0.3)(vite@8.3.8(@types/node@26.6.6)(esbuild@0.28.2)(tsx@4.23.15)(yaml@2.9.1))
+      '@sqlite.org/sqlite-wasm':
+        specifier: 3.54.1-build1
+        version: 3.54.1-build1
       '@testing-library/dom':
         specifier: 10.4.2
         version: 10.4.2

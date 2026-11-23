@@ -13,7 +13,13 @@ function fakeWorker(answer: (request: WorkerRequest) => WorkerResponse) {
   return worker;
 }
 
-const storage = { vfs: 'zooloo-sahpool', file: '/zooloo.sqlite3', migrated: ['0000_init'] };
+const storage = {
+  vfs: 'zooloo-sahpool',
+  file: '/zooloo.sqlite3',
+  migrated: ['0000_init'],
+  cipher: 'sqlcipher',
+  recreated: false,
+};
 
 describe('startWorkerEngine', () => {
   it('resolve quando o Worker abre o banco e encaminha consultas e wipe', async () => {

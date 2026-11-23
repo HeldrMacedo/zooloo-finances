@@ -18,7 +18,9 @@
 | TD-015 | Playwright E2E existe só para a PoC 1 (Chrome e Edge); falta WebKit e cobertura dos fluxos F1–F8 conforme forem implementados | passo 12 | média |
 | TD-016 | Fonte Nunito (Zooloo Kids, doc 13 §3) não empacotada; só entra na Fase 5 | passo 11 | baixa |
 | TD-017 | PoC 1 sem validação em Safari 17+/macOS 14+ e sem instalação real do PWA (clique em "Instalar"/"Adicionar ao Dock") | ADR-0006 | alta (antes do beta) |
-| TD-018 | Precache inclui `sqlite3-worker1` (~216 kB) não usado pelo app | ADR-0006 | baixa |
+| ~~TD-018~~ | ~~Precache inclui `sqlite3-worker1` (~216 kB) não usado pelo app~~ — resolvido no ADR-0008: o build do SQLite3MC não traz o worker1 | ADR-0006 | — |
 | TD-019 | Escrita local do sync (registro, outbox e cursor) não é atômica: o proxy do SQLite não abre transação entre mensagens. Adicionar lote transacional no Worker | ADR-0007 | média (antes do beta) |
 | TD-020 | Mutação recusada pelo servidor (ex.: nome duplicado criado offline) é desfeita sem aviso na interface | ADR-0007 | média (com o CRUD de categorias) |
 | TD-021 | Sync sem notificação em tempo real (WS/SSE, RNF-SYN-04), sem Background Sync e sem teste de carga de 20 mil lançamentos (RNF-PWA-03) | ADR-0007 | alta (antes do beta) |
+| TD-022 | Chave do banco local perdida (IndexedDB limpo pelo navegador ou pelo usuário) recria o banco vazio: alterações ainda só no outbox se perdem sem aviso. Avisar na interface e, com login, tentar enviar antes (RN-PWA-08) | ADR-0008 | média (com o login) |
+| TD-023 | Bundle do SQLite3MC conferido só por SHA256 contra o `SHA256SUMS` da release; falta verificar a assinatura Sigstore (`.sig`/`.pem`) desse arquivo ao atualizar | ADR-0008 | baixa |

@@ -14,7 +14,13 @@ function coordinatorWith(execute: (request: QueryRequest) => unknown[]) {
     close: () => undefined,
   };
   const engine: LocalDbEngine = {
-    storage: { vfs: 'zooloo-sahpool', file: '/zooloo.sqlite3', migrated: [] },
+    storage: {
+      vfs: 'zooloo-sahpool',
+      file: '/zooloo.sqlite3',
+      migrated: [],
+      cipher: 'sqlcipher',
+      recreated: false,
+    },
     execute: async (request) => ({ rows: execute(request) }),
     wipe: async () => undefined,
     close: () => undefined,

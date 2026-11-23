@@ -47,7 +47,7 @@ Em dev e teste os pacotes são lidos de `src/` pela condição de export `@zoolo
 - Valor monetário na tela só por `<Amount>` (sinal, cor e nome acessível de entrada/saída; modo privado).
 - Ícones e logotipo provisórios (doc 13 §7.1): `pnpm --filter @zooloo/web-app icons` gera `public/icons/`; a troca pelos vetores definitivos acontece só em `scripts/provisional-mark.ts` e `src/ui/brand/ZoolooLogo.tsx`.
 - Vitrine do design system em `/app/design` e PoC do banco local em `/app/dev/banco-local`, só em desenvolvimento e no build de E2E.
-- Banco local (ADR-0006): `src/data/local-db/`. SQLite WASM em Web Worker (`opfs-sahpool`), aba líder por Web Locks, demais abas pelo BroadcastChannel, Drizzle `sqlite-proxy` via `useLocalDb().orm`. Tabelas e migrações de `@zooloo/db-schema/local`.
+- Banco local (ADR-0006): `src/data/local-db/`. SQLite WASM em Web Worker (`opfs-sahpool`), aba líder por Web Locks, demais abas pelo BroadcastChannel, Drizzle `sqlite-proxy` via `useLocalDb().orm`. Tabelas e migrações de `@zooloo/db-schema/local`. Arquivo cifrado (ADR-0008): SQLite3 Multiple Ciphers em `vendor/sqlite3mc/` (hash fixo, não editar), esquema SQLCipher 4, chave em `database-key.ts` guardada cifrada por `CryptoKey` não exportável no IndexedDB.
 - Service Worker (`src/sw.ts`, Serwist): precache do app shell, sem cache de `/api` (RNF-PWA-04).
 - Sync (ADR-0007): `src/data/sync/` — `LocalSyncStore` (réplica local, outbox `sync_outbox`, `sync_meta`) e `HttpSyncTransport`; motor de `@zooloo/sync-core`. PoC em `/app/dev/sync`.
 - E2E: `pnpm --filter @zooloo/web-app test:e2e` (Playwright, build de produção com `--mode e2e`). Os testes de sync rodam contra a API da worktree quando existe `.env.worktree` (`pnpm dev:worktree up`); sem ele, são pulados.

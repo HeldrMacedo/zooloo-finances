@@ -42,6 +42,18 @@ export interface StorageInfo {
   readonly file: string;
   /** Migrações aplicadas nesta abertura. */
   readonly migrated: readonly string[];
+  /** Cifra ativa, conferida antes de usar o banco (SEC-CR-08), ex.: `sqlcipher (SQLite3MC 2.7.1)`. */
+  readonly cipher: string;
+  /** O banco foi recriado vazio porque não havia chave que o abrisse; o sync o preenche de novo. */
+  readonly recreated: boolean;
+}
+
+/** Resultado da medição da PoC 3 (`cipher-bench.worker.ts`, ADR-0008), em milissegundos. */
+export interface CipherBenchResult {
+  readonly rows: number;
+  readonly plainMs: number;
+  readonly databaseCipherMs: number;
+  readonly fieldCipherMs: number;
 }
 
 export function isTabMessage(value: unknown): value is TabMessage {

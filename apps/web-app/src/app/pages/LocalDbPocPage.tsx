@@ -5,13 +5,14 @@ import { nowIso } from '../../data/clock.js';
 import { uuidv7 } from '../../data/ids.js';
 import type { LocalDbStatus } from '../../data/local-db/coordinator.js';
 import { type LocalDb, useLocalDb, useLocalDbStatus } from '../../data/local-db/LocalDbContext.js';
+import type { CipherBenchResult } from '../../data/local-db/protocol.js';
 import { Button } from '../../ui/button/Button.js';
 import { Card } from '../../ui/card/Card.js';
 import pages from './pages.module.css';
 
 /**
- * PoC 1 (doc 09 §8): banco local no PWA. Só em desenvolvimento e no build de E2E. Dados
- * sintéticos; perfil fixo para não depender de login.
+ * PoC 1 e 3 (doc 09 §8): banco local cifrado no PWA. Só em desenvolvimento e no build de E2E.
+ * Dados sintéticos; perfil fixo para não depender de login.
  */
 const POC_USER = '01960000-0000-7000-8fff-000000000001';
 const POC_PROFILE = '01960000-0000-7000-8fff-000000000002';
@@ -60,11 +61,39 @@ async function addCategory(db: LocalDb, index: number): Promise<void> {
   });
 }
 
+const BENCH_ROWS = 2000;
+
+/** Mede as duas estratégias da SEC-CR-08 num Worker à parte, com pool OPFS próprio (ADR-0008). */
+function runCipherBench(rows: number): Promise<CipherBenchResult> {
+  const worker = new Worker(
+    new URL('../../data/local-db/cipher-bench.worker.ts', import.meta.url),
+    {
+      type: 'module',
+      name: 'zooloo-cipher-bench',
+    },
+  );
+  return new Promise((resolve, reject) => {
+    worker.onmessage = (event: MessageEvent<CipherBenchResult>) => {
+      worker.terminate();
+      resolve(event.data);
+    };
+    worker.onerror = (event) => {
+      worker.terminate();
+      reject(new Error(event.message));
+    };
+    worker.postMessage({ rows });
+  });
+}
+
+const describeBench = (result: CipherBenchResult) =>
+  `${result.rows} linhas: sem cifra ${result.plainMs} ms, banco cifrado ${result.databaseCipherMs} ms, cifra por campo ${result.fieldCipherMs} ms.`;
+
 export function LocalDbPocPage() {
   const db = useLocalDb();
   const status = useLocalDbStatus();
   const [total, setTotal] = useState<number | null>(null);
   const [message, setMessage] = useState('');
+  const [bench, setBench] = useState('');
 
   const refresh = useCallback(async () => {
     if (db) {
@@ -108,7 +137,9 @@ export function LocalDbPocPage() {
         <p>{describeRole(status)}</p>
         {status.role === 'leader' && (
           <p className={pages.emptyBody}>
-            VFS {status.storage.vfs}, arquivo {status.storage.file}
+            VFS {status.storage.vfs}, arquivo {status.storage.file}, cifra {status.storage.cipher}
+            {status.storage.recreated &&
+              '. Recriado: não havia chave que abrisse o banco anterior.'}
           </p>
         )}
         <p aria-live="polite">Categorias de teste: {total ?? '…'}</p>
@@ -124,6 +155,18 @@ export function LocalDbPocPage() {
               Adicionar categoria de teste
             </Button>
             <Button onClick={run(refresh, 'Contagem atualizada.')}>Atualizar contagem</Button>
+            <Button
+              onClick={() => {
+                setBench('Medindo…');
+                runCipherBench(BENCH_ROWS).then(
+                  (result) => setBench(describeBench(result)),
+                  (error: unknown) =>
+                    setBench(`Falhou: ${error instanceof Error ? error.message : String(error)}`),
+                );
+              }}
+            >
+              Medir cifras
+            </Button>
             {status.role === 'leader' && (
               <Button
                 variant="danger"
@@ -137,6 +180,7 @@ export function LocalDbPocPage() {
               </Button>
             )}
           </div>
+          {bench && <p aria-live="polite">{bench}</p>}
         </Card>
       )}
     </div>

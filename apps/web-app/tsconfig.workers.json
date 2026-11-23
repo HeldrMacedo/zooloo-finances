@@ -8,5 +8,9 @@
     "noEmit": true,
     "declaration": false
   },
-  "include": ["src/sw.ts", "src/data/local-db/db.worker.ts"]
+  "include": [
+    "src/sw.ts",
+    "src/data/local-db/db.worker.ts",
+    "src/data/local-db/cipher-bench.worker.ts"
+  ]
 }

@@ -10,5 +10,10 @@
     "declaration": false
   },
   "include": ["src"],
-  "exclude": ["src/sw.ts", "src/data/local-db/db.worker.ts"]
+  "exclude": [
+    "src/sw.ts",
+    "src/data/local-db/db.worker.ts",
+    "src/data/local-db/cipher-bench.worker.ts",
+    "src/data/local-db/sqlite3mc.ts"
+  ]
 }

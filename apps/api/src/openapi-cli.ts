@@ -13,6 +13,7 @@ const app = await createApp(
     DATABASE_POOL_MAX: 1,
     LOG_LEVEL: 'error',
     OPENAPI_UI: false,
+    DEV_AUTH: false,
   },
   createLogger({ sink: () => undefined, level: 'error' }),
 );

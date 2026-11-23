@@ -55,7 +55,7 @@ afterAll(async () => {
 
 describe('estrutura: toda tabela de dados do usuário tem RLS (doc 12 §5.2)', () => {
   it('o esquema Drizzle declara as tabelas esperadas', () => {
-    expect(tableNames).toEqual(['categories', 'profiles', 'users']);
+    expect(tableNames).toEqual(['categories', 'profiles', 'sync_state', 'users']);
   });
 
   it('as migrações criam exatamente as tabelas do esquema', async () => {
@@ -310,6 +310,38 @@ describe('integridade de categorias (RN-CAT-01, 03, 07)', () => {
     await expect(insertSystem('0196f3a2-0000-7000-8000-0000000000e2', 'Outros 2')).rejects.toThrow(
       /categories_system_unique/,
     );
+  });
+});
+
+describe('versão de sync (RNF-SYN-03)', () => {
+  it('cada usuário só lê e incrementa a própria versão; sem DELETE para a aplicação', async () => {
+    const bump = (userId: string) =>
+      asUser(db.app, userId, async (client) => {
+        const { rows } = await client.query<{ version: string }>(
+          `insert into sync_state (user_id, version) values ($1, 1)
+           on conflict (user_id) do update set version = sync_state.version + 1
+           returning version`,
+          [userId],
+        );
+        return Number(rows[0]?.version);
+      });
+    expect(await bump(USER_A)).toBe(1);
+    expect(await bump(USER_A)).toBe(2);
+    expect(await bump(USER_B)).toBe(1);
+    const visible = await asUser(db.app, USER_A, (client) =>
+      client.query('select user_id from sync_state'),
+    );
+    expect(visible.rows).toEqual([{ user_id: USER_A }]);
+    await expect(
+      asUser(db.app, USER_A, (client) => client.query('delete from sync_state')),
+    ).rejects.toThrow(/permission denied/);
+  });
+
+  it('field_hlc começa vazio e guarda o HLC por campo', async () => {
+    const { rows } = await asUser(db.app, USER_A, (client) =>
+      client.query<{ field_hlc: unknown }>('select field_hlc from profiles'),
+    );
+    expect(rows).toEqual([{ field_hlc: {} }]);
   });
 });
 

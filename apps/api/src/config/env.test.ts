@@ -13,7 +13,15 @@ describe('loadEnv', () => {
       DATABASE_POOL_MAX: 10,
       LOG_LEVEL: 'info',
       OPENAPI_UI: true,
+      DEV_AUTH: false,
     });
+  });
+
+  it('DEV_AUTH só fora de produção', () => {
+    expect(loadEnv({ DATABASE_URL, DEV_AUTH: 'true' }).DEV_AUTH).toBe(true);
+    expect(() => loadEnv({ DATABASE_URL, DEV_AUTH: 'true', NODE_ENV: 'production' })).toThrow(
+      /DEV_AUTH não pode ser ligada em produção/,
+    );
   });
 
   it('aceita postgresql://', () => {

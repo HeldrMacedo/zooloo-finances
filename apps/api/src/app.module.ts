@@ -4,6 +4,7 @@ import type { Logger } from '@zooloo/security';
 import type { Env } from './config/env.js';
 import { ENV, LOGGER } from './config/tokens.js';
 import { HealthController } from './modules/health/health.controller.js';
+import { SyncModule } from './modules/sync/sync.module.js';
 import { DatabaseModule } from './providers/database/database.module.js';
 import { ProblemFilter } from './runtime/http/problem.filter.js';
 
@@ -14,7 +15,7 @@ export class AppModule {
     return {
       module: AppModule,
       global: true,
-      imports: [DatabaseModule, ...extraModules],
+      imports: [DatabaseModule, SyncModule, ...extraModules],
       controllers: [HealthController],
       providers: [
         { provide: ENV, useValue: env },

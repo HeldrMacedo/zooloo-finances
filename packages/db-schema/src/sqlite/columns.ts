@@ -15,4 +15,8 @@ export const syncColumns = () => ({
   deletedAt: isoTimestamp('deleted_at'),
   serverVersion: integer('server_version').notNull().default(0),
   hlc: text('hlc').notNull(),
+  fieldHlc: text('field_hlc', { mode: 'json' })
+    .$type<Record<string, string>>()
+    .notNull()
+    .default({}),
 });

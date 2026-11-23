@@ -21,3 +21,8 @@ export function currentHour(): number {
   // eslint-disable-next-line no-restricted-syntax -- adaptador de relógio (doc 12 §5.2).
   return new Date().getHours();
 }
+
+/** Milissegundos desde a época, para o relógio HLC do sync. */
+export function currentWallMs(): number {
+  return Date.now();
+}

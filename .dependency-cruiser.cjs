@@ -14,6 +14,17 @@ module.exports = {
       },
     },
     {
+      name: 'sync-core-sem-io',
+      comment:
+        '@zooloo/sync-core é puro: banco e rede entram pelas portas SyncStore e SyncTransport, implementadas no app (doc 07 §4A).',
+      severity: 'error',
+      from: { path: '^packages/sync-core/src', pathNot: '\\.test\\.ts$' },
+      to: {
+        pathNot: '^packages/sync-core/src',
+        dependencyTypesNot: ['type-only'],
+      },
+    },
+    {
       name: 'app-nao-importa-app',
       comment:
         'Apps só se comunicam por pacotes e pela API; nunca importam código de outro app. Extraia o código compartilhado para um pacote em packages/ (doc 09 §3).',

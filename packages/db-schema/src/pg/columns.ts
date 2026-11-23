@@ -1,4 +1,4 @@
-import { bigint, text, timestamp, uuid } from 'drizzle-orm/pg-core';
+import { bigint, jsonb, text, timestamp, uuid } from 'drizzle-orm/pg-core';
 
 const timestamptz = (name: string) => timestamp(name, { withTimezone: true, precision: 3 });
 
@@ -19,7 +19,10 @@ export const syncColumns = () => ({
   ...auditTimestamps(),
   deletedAt: timestamptz('deleted_at'),
   serverVersion: bigint('server_version', { mode: 'number' }).notNull().default(0),
+  /** Maior HLC entre os campos: ordena a última escrita do registro. */
   hlc: text('hlc').notNull(),
+  /** HLC da última escrita de cada campo, para o merge por campo (doc 07 §4, ADR-0007). */
+  fieldHlc: jsonb('field_hlc').$type<Record<string, string>>().notNull().default({}),
 });
 
 export { timestamptz };

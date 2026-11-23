@@ -63,6 +63,8 @@ export const categories = pgTable(
       .on(table.profileId, table.type)
       .where(sql`${table.isSystem} and ${table.deletedAt} is null`),
     index('categories_profile_idx').on(table.profileId),
+    // Pull do sync: mudanças do usuário depois do cursor (RNF-SYN-03).
+    index('categories_sync_idx').on(table.userId, table.serverVersion),
     ...ownerPolicies(table.userId),
   ],
 ).enableRLS();

@@ -16,4 +16,13 @@ export const LOCAL_MIGRATIONS: readonly LocalMigration[] = [
       "-- Nome único por (perfil, tipo, pai), sem diferenciar maiúsculas (RN-CAT-07), igual ao servidor.\n-- Escrito à mão porque o drizzle-kit 0.31 gera este índice de expressão com SQL inválido (TD-005).\nCREATE UNIQUE INDEX `categories_name_unique` ON `categories` (`profile_id`, `type`, coalesce(`parent_id`, ''), lower(`name`)) WHERE `deleted_at` IS NULL;",
     ],
   },
+  {
+    tag: '0002_sync_outbox_and_field_hlc',
+    statements: [
+      'CREATE TABLE `sync_meta` (\n\t`key` text PRIMARY KEY NOT NULL,\n\t`value` text NOT NULL\n);',
+      'CREATE TABLE `sync_outbox` (\n\t`seq` integer PRIMARY KEY AUTOINCREMENT NOT NULL,\n\t`entity` text NOT NULL,\n\t`record_id` text NOT NULL,\n\t`op` text NOT NULL,\n\t`fields` text NOT NULL,\n\t`hlc` text NOT NULL\n);',
+      "ALTER TABLE `categories` ADD `field_hlc` text DEFAULT '{}' NOT NULL;",
+      "ALTER TABLE `profiles` ADD `field_hlc` text DEFAULT '{}' NOT NULL;",
+    ],
+  },
 ];

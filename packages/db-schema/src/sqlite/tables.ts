@@ -46,3 +46,22 @@ export const categories = sqliteTable(
     index('categories_profile_idx').on(table.profileId),
   ],
 );
+
+/**
+ * Fila de mutações locais ainda não enviadas ao servidor (outbox, doc 07 §4A). Só existe no
+ * cliente; `seq` preserva a ordem em que foram feitas.
+ */
+export const syncOutbox = sqliteTable('sync_outbox', {
+  seq: integer('seq').primaryKey({ autoIncrement: true }),
+  entity: text('entity').notNull(),
+  recordId: text('record_id').notNull(),
+  op: text('op', { enum: ['upsert', 'delete'] }).notNull(),
+  fields: text('fields', { mode: 'json' }).$type<Record<string, unknown>>().notNull(),
+  hlc: text('hlc').notNull(),
+});
+
+/** Estado do sync no cliente: cursor do pull, último HLC e identificador do dispositivo. */
+export const syncMeta = sqliteTable('sync_meta', {
+  key: text('key').primaryKey(),
+  value: text('value').notNull(),
+});

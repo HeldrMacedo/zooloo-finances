@@ -19,3 +19,6 @@
 | TD-016 | Fonte Nunito (Zooloo Kids, doc 13 §3) não empacotada; só entra na Fase 5 | passo 11 | baixa |
 | TD-017 | PoC 1 sem validação em Safari 17+/macOS 14+ e sem instalação real do PWA (clique em "Instalar"/"Adicionar ao Dock") | ADR-0006 | alta (antes do beta) |
 | TD-018 | Precache inclui `sqlite3-worker1` (~216 kB) não usado pelo app | ADR-0006 | baixa |
+| TD-019 | Escrita local do sync (registro, outbox e cursor) não é atômica: o proxy do SQLite não abre transação entre mensagens. Adicionar lote transacional no Worker | ADR-0007 | média (antes do beta) |
+| TD-020 | Mutação recusada pelo servidor (ex.: nome duplicado criado offline) é desfeita sem aviso na interface | ADR-0007 | média (com o CRUD de categorias) |
+| TD-021 | Sync sem notificação em tempo real (WS/SSE, RNF-SYN-04), sem Background Sync e sem teste de carga de 20 mil lançamentos (RNF-PWA-03) | ADR-0007 | alta (antes do beta) |

@@ -8,13 +8,13 @@ Fonte normativa: `docs/product-specs/09-arquitetura-e-stack.md` (stack) e `docs/
 |---|---|---|
 | `packages/domain` | ativo | Regras de negócio puras, sem I/O: `Money`, `LocalDate`, parcelas, ciclo de fatura, orçamento |
 | `packages/ui-tokens` | ativo | Tokens da marca (doc 13 §6), temas claro/escuro, teste de contraste |
-| `packages/sync-core` | planejado | Outbox, pull/push, HLC, merge por campo |
-| `packages/db-schema` | ativo | Drizzle: PostgreSQL com RLS (`users`, `profiles`, `categories`) e SQLite local espelhado; migrações em `migrations/` (ADR-0005) |
+| `packages/sync-core` | ativo | HLC, merge por campo, `SyncEngine` (outbox, push/pull) com portas `SyncStore`/`SyncTransport`; puro, sem I/O (ADR-0007) |
+| `packages/db-schema` | ativo | Drizzle: PostgreSQL com RLS (`users`, `profiles`, `categories`, `sync_state`) e SQLite local espelhado; migrações em `migrations/` (ADR-0005) |
 | `packages/validation` | ativo | Schemas Zod da fronteira: primitivos (`IdSchema` UUIDv7, `LocalDateSchema`, `MoneySchema`, cursor), categorias, problem+json (RFC 9457) |
 | `packages/security` | ativo | Logger estruturado com mascaramento (SEC-LOG-01); criptografia e sanitização planejadas |
 | `packages/api-client` | planejado | Cliente tipado gerado do OpenAPI |
 | `packages/i18n` | ativo | Catálogo pt-BR tipado com plural, `formatMoney`/`parseMoneyInput` sem float, `formatLocalDate` |
-| `apps/api` | ativo | NestJS 12 + Fastify (ADR-0002): `/api/v1`, health, OpenAPI dos schemas Zod, problem+json, helmet; sync e SSE planejados |
+| `apps/api` | ativo | NestJS 12 + Fastify (ADR-0002): `/api/v1`, health, sync push/pull (ADR-0007), OpenAPI dos schemas Zod, problem+json, helmet; SSE planejado |
 | `apps/workers` | planejado | BullMQ: recorrências, e-mails, jobs LGPD |
 | `apps/web-app` | ativo | Vite 8 + React 19 em `/app/`: app shell (topbar, menu lateral), componentes base, temas claro/escuro/automático, modo privado, atalhos `/` e `N`, manifest e ícones provisórios; Service Worker e banco local na PoC 1 |
 | `apps/site` | planejado | Next.js: landing, termos, privacidade |
@@ -28,7 +28,7 @@ Em dev e teste os pacotes são lidos de `src/` pela condição de export `@zoolo
 
 ## Regras de dependência (verificadas no CI)
 
-- `packages/domain` não importa nada fora de si (ESLint `no-restricted-imports` + dependency-cruiser `domain-sem-io`).
+- `packages/domain` e `packages/sync-core` não importam nada fora de si (ESLint `no-restricted-imports` + dependency-cruiser `domain-sem-io` e `sync-core-sem-io`).
 - Apps não importam outros apps; pacotes não importam apps; sem ciclos (`.dependency-cruiser.cjs`).
 - Dentro de cada domínio de negócio: `Types → Config → Repo → Service → Runtime → UI`, com `Providers` como única porta para o transversal (doc 12 §5.1). As regras por camada entram junto com o primeiro app.
 
@@ -37,6 +37,7 @@ Em dev e teste os pacotes são lidos de `src/` pela condição de export `@zoolo
 - Camadas no app: `config/` (env validado com Zod), `providers/` (banco, logging: única porta para o transversal), `runtime/http/` (filtro problem+json, validação), `modules/<domínio>/` (controllers e services).
 - Validação na fronteira: `@Body({ schema: XxxSchema })` com schemas de `@zooloo/validation`; o pipe global (`StandardSchemaValidationPipe`) responde 422 em problem+json.
 - Acesso a dados do usuário só por `DatabaseService.withUser(userId, tx => …)`, que abre a transação no contexto da RLS.
+- Usuário da requisição: `@UseGuards(CurrentUserGuard)` + `@CurrentUser()`. Até existir login, o guard aceita só `X-Dev-User-Id` com `DEV_AUTH=true`, proibido em produção (ADR-0007, TD-008).
 - OpenAPI gerado dos controllers e dos schemas Zod (`standardSchema`). Mudou a API? `pnpm build && pnpm --filter @zooloo/api openapi` e versione `apps/api/openapi.json`; o CI falha se divergir.
 
 ## Web-app (`apps/web-app`)
@@ -48,7 +49,8 @@ Em dev e teste os pacotes são lidos de `src/` pela condição de export `@zoolo
 - Vitrine do design system em `/app/design` e PoC do banco local em `/app/dev/banco-local`, só em desenvolvimento e no build de E2E.
 - Banco local (ADR-0006): `src/data/local-db/`. SQLite WASM em Web Worker (`opfs-sahpool`), aba líder por Web Locks, demais abas pelo BroadcastChannel, Drizzle `sqlite-proxy` via `useLocalDb().orm`. Tabelas e migrações de `@zooloo/db-schema/local`.
 - Service Worker (`src/sw.ts`, Serwist): precache do app shell, sem cache de `/api` (RNF-PWA-04).
-- E2E: `pnpm --filter @zooloo/web-app test:e2e` (Playwright, build de produção com `--mode e2e`).
+- Sync (ADR-0007): `src/data/sync/` — `LocalSyncStore` (réplica local, outbox `sync_outbox`, `sync_meta`) e `HttpSyncTransport`; motor de `@zooloo/sync-core`. PoC em `/app/dev/sync`.
+- E2E: `pnpm --filter @zooloo/web-app test:e2e` (Playwright, build de produção com `--mode e2e`). Os testes de sync rodam contra a API da worktree quando existe `.env.worktree` (`pnpm dev:worktree up`); sem ele, são pulados.
 
 ## Banco de dados
 

@@ -3,6 +3,7 @@ import {
   check,
   char,
   foreignKey,
+  index,
   integer,
   jsonb,
   pgTable,
@@ -36,6 +37,7 @@ export const profiles = pgTable(
     // Alvo das FKs compostas (profile_id, user_id): impede referenciar perfil de outro usuário.
     unique('profiles_id_user_unique').on(table.id, table.userId),
     check('profiles_currency_iso', sql`${table.currency} ~ '^[A-Z]{3}$'`),
+    index('profiles_sync_idx').on(table.userId, table.serverVersion),
     ...ownerPolicies(table.userId),
   ],
 ).enableRLS();

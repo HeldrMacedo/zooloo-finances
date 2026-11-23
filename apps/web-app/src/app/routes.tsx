@@ -4,6 +4,7 @@ import { DesignSystemPage } from './pages/DesignSystemPage.js';
 import { LocalDbPocPage } from './pages/LocalDbPocPage.js';
 import { NotFoundPage } from './pages/NotFoundPage.js';
 import { SummaryPage } from './pages/summary/SummaryPage.js';
+import { SyncPocPage } from './pages/SyncPocPage.js';
 import { AppShell } from './shell/AppShell.js';
 import { NAV_ITEMS, SECONDARY_NAV_ITEMS } from './shell/Sidebar.js';
 
@@ -24,6 +25,7 @@ export function appRoutes(options: { readonly withDesignSystem: boolean }): Rout
           ? [
               { path: 'design', element: <DesignSystemPage /> },
               { path: 'dev/banco-local', element: <LocalDbPocPage /> },
+              { path: 'dev/sync', element: <SyncPocPage /> },
             ]
           : []),
         { path: '*', element: <NotFoundPage /> },

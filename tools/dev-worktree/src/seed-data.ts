@@ -3,7 +3,12 @@
  * IDs fixos (UUIDv7 válidos) para o seed ser idempotente e os testes manuais reproduzíveis.
  * Não é a lista oficial de categorias do onboarding (RF-ONB-02), que ainda não foi definida.
  */
-export const SEED_HLC = '0000000000000:0000:seed';
+/** HLC do seed: o menor possível, para qualquer edição feita num dispositivo vencer (doc 07 §4). */
+export const SEED_HLC = '000000000000000-000000-0000000000000000';
+/** HLC das versões antigas do seed (antes do sync); o seed atualiza essas linhas. */
+export const LEGACY_SEED_HLC = '0000000000000:0000:seed';
+/** Versão de sync das linhas do seed: o primeiro pull (`since=0`) as entrega. */
+export const SEED_VERSION = 1;
 
 export interface SeedCategory {
   readonly id: string;

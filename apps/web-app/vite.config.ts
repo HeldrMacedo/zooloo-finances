@@ -11,6 +11,7 @@ const webPort = Number(process.env['ZL_WEB_PORT'] ?? 5173);
 const apiTarget = `http://127.0.0.1:${process.env['PORT'] ?? 3000}`;
 /** O build de E2E (com ferramentas de dev) vai para outra pasta e nunca se mistura ao de produção. */
 const outDir = process.env['ZL_OUT_DIR'] ?? 'dist';
+const e2eApiPort = process.env['ZL_E2E_API_PORT'];
 
 export default defineConfig({
   base: '/app/',
@@ -41,7 +42,13 @@ export default defineConfig({
     strictPort: true,
     proxy: { '/api': { target: apiTarget, changeOrigin: false } },
   },
-  // Sem proxy no preview: o E2E roda sem API.
-  preview: { host: '127.0.0.1', strictPort: true, proxy: {} },
+  // Preview do E2E: proxy para a API só quando a worktree tem uma (testes de sync).
+  preview: {
+    host: '127.0.0.1',
+    strictPort: true,
+    proxy: e2eApiPort
+      ? { '/api': { target: `http://127.0.0.1:${e2eApiPort}`, changeOrigin: false } }
+      : {},
+  },
   build: { outDir, sourcemap: true, target: 'es2023' },
 });

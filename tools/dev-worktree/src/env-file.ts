@@ -34,6 +34,8 @@ export function renderEnvFile(slug: string, ports: WorktreePorts): string {
     `REDIS_URL=${uris.redis}`,
     'LOG_LEVEL=debug',
     'OPENAPI_UI=true',
+    // Identificação provisória por cabeçalho até existir login (ADR-0007). Nunca em produção.
+    'DEV_AUTH=true',
     `ZL_WEB_PORT=${ports.web}`,
   ];
   return `${lines.join('\n')}\n`;

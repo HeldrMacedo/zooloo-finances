@@ -253,6 +253,9 @@ importers:
       '@zooloo/security':
         specifier: workspace:*
         version: link:../../packages/security
+      '@zooloo/sync-core':
+        specifier: workspace:*
+        version: link:../../packages/sync-core
       '@zooloo/validation':
         specifier: workspace:*
         version: link:../../packages/validation
@@ -323,9 +326,15 @@ importers:
       '@zooloo/i18n':
         specifier: workspace:*
         version: link:../../packages/i18n
+      '@zooloo/sync-core':
+        specifier: workspace:*
+        version: link:../../packages/sync-core
       '@zooloo/ui-tokens':
         specifier: workspace:*
         version: link:../../packages/ui-tokens
+      '@zooloo/validation':
+        specifier: workspace:*
+        version: link:../../packages/validation
       drizzle-orm:
         specifier: 0.45.4
         version: 0.45.4(@types/pg@8.23.1)(pg@8.23.1)
@@ -375,9 +384,6 @@ importers:
       '@vitest/coverage-v8':
         specifier: 5.1.0
         version: 5.1.0(vitest@5.1.0)
-      '@zooloo/validation':
-        specifier: workspace:*
-        version: link:../../packages/validation
       '@zooloo/vitest-config':
         specifier: workspace:*
         version: link:../../tools/vitest-config
@@ -491,6 +497,30 @@ importers:
       '@types/node':
         specifier: 26.6.6
         version: 26.6.6
+      '@vitest/coverage-v8':
+        specifier: 5.1.0
+        version: 5.1.0(vitest@5.1.0)
+      '@zooloo/vitest-config':
+        specifier: workspace:*
+        version: link:../../tools/vitest-config
+      fast-check:
+        specifier: 4.10.2
+        version: 4.10.2
+      typescript:
+        specifier: 6.0.3
+        version: 6.0.3
+      vitest:
+        specifier: 5.1.0
+        version: 5.1.0(@types/node@26.6.6)(@vitest/coverage-v8@5.1.0)(jsdom@31.0.1)(vite@8.3.8(@types/node@26.6.6)(esbuild@0.28.2)(tsx@4.23.15)(yaml@2.9.1))
+
+  packages/sync-core:
+    devDependencies:
+      '@stryker-mutator/core':
+        specifier: 10.1.1
+        version: 10.1.1(@types/node@26.6.6)
+      '@stryker-mutator/vitest-runner':
+        specifier: 10.1.1
+        version: 10.1.1(@stryker-mutator/core@10.1.1(@types/node@26.6.6))(vitest@5.1.0)
       '@vitest/coverage-v8':
         specifier: 5.1.0
         version: 5.1.0(vitest@5.1.0)

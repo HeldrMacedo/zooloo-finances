@@ -28,6 +28,7 @@ export async function startTestApi(
     DATABASE_POOL_MAX: 4,
     LOG_LEVEL: 'debug',
     OPENAPI_UI: false,
+    DEV_AUTH: false,
     ...overrides,
   };
   const logger = createLogger({ sink: (record) => logs.push(record), level: 'debug' });

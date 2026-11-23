@@ -79,7 +79,7 @@ export default tseslint.config(
     },
   },
   {
-    files: ['packages/domain/src/**/*.ts'],
+    files: ['packages/domain/src/**/*.ts', 'packages/sync-core/src/**/*.ts'],
     ignores: ['**/*.test.ts'],
     rules: {
       '@typescript-eslint/no-non-null-assertion': 'error',
@@ -101,7 +101,7 @@ export default tseslint.config(
                 'react*',
                 '@zooloo/*',
               ],
-              message: `@zooloo/domain é puro, sem I/O nem plataforma (doc 09 §3). Mova o acesso a dados para a camada Repo e passe os valores como parâmetro.`,
+              message: `@zooloo/domain e @zooloo/sync-core são puros, sem I/O nem plataforma (doc 09 §3). Mova o acesso a dados para a camada Repo e passe os valores (ou portas) como parâmetro.`,
             },
           ],
         },

@@ -4,6 +4,7 @@ import { existsSync, writeFileSync } from 'node:fs';
 import { basename, join } from 'node:path';
 import { pathWithDocker } from './docker.js';
 import { connectionUris, renderEnvFile } from './env-file.js';
+import { SEED_USERS } from './seed-data.js';
 import { seedDatabase } from './seed.js';
 import { portsFor, projectName, slugify } from './worktree.js';
 
@@ -110,7 +111,13 @@ function web(): void {
     {
       stdio: 'inherit',
       cwd: join(root, 'apps', 'web-app'),
-      env: { ...childEnv, ZL_WEB_PORT: String(ports.web), PORT: String(ports.api) },
+      env: {
+        ...childEnv,
+        ZL_WEB_PORT: String(ports.web),
+        PORT: String(ports.api),
+        // Usuário do seed que a PoC de sync usa por padrão (ADR-0007).
+        VITE_ZL_DEV_USER_ID: SEED_USERS[0]?.id ?? '',
+      },
       shell: false,
     },
   );

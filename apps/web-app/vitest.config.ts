@@ -11,6 +11,8 @@ export default mergeConfig(base, {
   resolve: { conditions: ['@zooloo/source', 'module', 'browser', 'development|production'] },
   test: {
     environment: 'jsdom',
+    // Telas com banco SQLite em memória e axe ficam lentas quando o `pnpm check` roda tudo em paralelo.
+    testTimeout: 30_000,
     exclude: ['e2e/**', 'node_modules/**'],
     include: ['src/**/*.test.{ts,tsx}', 'scripts/**/*.test.ts', 'build/**/*.test.ts'],
     setupFiles: ['./src/testing/setup.ts'],

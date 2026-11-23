@@ -6,17 +6,17 @@ Fonte normativa: `docs/product-specs/09-arquitetura-e-stack.md` (stack) e `docs/
 
 | Caminho | Status | Papel |
 |---|---|---|
-| `packages/domain` | ativo | Regras de negócio puras, sem I/O: `Money`, `LocalDate`, parcelas, ciclo de fatura, orçamento |
-| `packages/ui-tokens` | ativo | Tokens da marca (doc 13 §6), temas claro/escuro, teste de contraste |
-| `packages/sync-core` | ativo | HLC, merge por campo, `SyncEngine` (outbox, push/pull) com portas `SyncStore`/`SyncTransport`; puro, sem I/O (ADR-0007) |
+| `packages/domain` | ativo | Regras de negócio puras, sem I/O: `Money`, `LocalDate`, parcelas, ciclo de fatura, orçamento, categorias (árvore de 2 níveis, "Outros", nome único, arquivamento derivado, ordem manual) usadas no web-app e no push do servidor |
+| `packages/ui-tokens` | ativo | Tokens da marca (doc 13 §6), temas claro/escuro, paleta de cores de categoria (doc 13 §2.5), teste de contraste |
+| `packages/sync-core` | ativo | HLC, merge por campo, `SyncEngine` (outbox, push/pull) com portas `SyncStore`/`SyncTransport`, gerador UUIDv7 com relógio e aleatoriedade injetados; puro, sem I/O (ADR-0007) |
 | `packages/db-schema` | ativo | Drizzle: PostgreSQL com RLS (`users`, `profiles`, `categories`, `sync_state`) e SQLite local espelhado; migrações em `migrations/` (ADR-0005) |
 | `packages/validation` | ativo | Schemas Zod da fronteira: primitivos (`IdSchema` UUIDv7, `LocalDateSchema`, `MoneySchema`, cursor), categorias, problem+json (RFC 9457) |
 | `packages/security` | ativo | Logger estruturado com mascaramento (SEC-LOG-01); criptografia e sanitização planejadas |
 | `packages/api-client` | planejado | Cliente tipado gerado do OpenAPI |
 | `packages/i18n` | ativo | Catálogo pt-BR tipado com plural, `formatMoney`/`parseMoneyInput` sem float, `formatLocalDate` |
-| `apps/api` | ativo | NestJS 12 + Fastify (ADR-0002): `/api/v1`, health, sync push/pull (ADR-0007), OpenAPI dos schemas Zod, problem+json, helmet; SSE planejado |
+| `apps/api` | ativo | NestJS 12 + Fastify (ADR-0002): `/api/v1`, health, sync push/pull (ADR-0007) com regras de categoria do domínio validadas contra o estado do servidor, OpenAPI dos schemas Zod, problem+json, helmet; SSE planejado |
 | `apps/workers` | planejado | BullMQ: recorrências, e-mails, jobs LGPD |
-| `apps/web-app` | ativo | Vite 8 + React 19 em `/app/`: app shell (topbar, menu lateral), componentes base, temas claro/escuro/automático, modo privado, atalhos `/` e `N`, manifest e ícones provisórios; Service Worker e banco local na PoC 1 |
+| `apps/web-app` | ativo | Vite 8 + React 19 em `/app/`: app shell (topbar, menu lateral), componentes base, temas claro/escuro/automático, modo privado, atalhos `/` e `N`, manifest e ícones provisórios; Service Worker e banco local cifrado (PoC 1 e 3); `SyncProvider` do app; tela `/categorias` offline-first |
 | `apps/site` | planejado | Next.js: landing, termos, privacidade |
 | `apps/mobile`, `apps/kids`, `apps/mcp` | reservado | Fases 2, 4 e 5 |
 | `tools/dev-worktree` | ativo | `pnpm dev:worktree`: Docker Compose por worktree (`infra/dev`), migrações, seed sintético, `.env.worktree`, API em watch |
@@ -42,14 +42,15 @@ Em dev e teste os pacotes são lidos de `src/` pela condição de export `@zoolo
 
 ## Web-app (`apps/web-app`)
 
-- `src/ui/`: componentes do design system (Button, TextField, Card, Amount, ZoolooLogo, SyncStatus) e contextos de tema e privacidade. Cores só por variáveis `--zl-*`, geradas de `@zooloo/ui-tokens` no build (`build/tokens-css.ts`, módulo `virtual:zooloo-tokens.css`); nada de hex solto em CSS.
+- `src/ui/`: componentes do design system (Button, TextField, SelectField, SwitchField, Card, Amount, Dialog, ActionMenu, Tabs, CategoryChip, IconPicker, ColorPicker, ZoolooLogo, SyncStatus) e contextos de tema e privacidade. Cores só por variáveis `--zl-*`, geradas de `@zooloo/ui-tokens` no build (`build/tokens-css.ts`, módulo `virtual:zooloo-tokens.css`); nada de hex solto em CSS.
 - `src/app/`: shell, rotas e páginas. Telas do menu ainda não construídas usam `ComingSoonPage`.
 - Valor monetário na tela só por `<Amount>` (sinal, cor e nome acessível de entrada/saída; modo privado).
 - Ícones e logotipo provisórios (doc 13 §7.1): `pnpm --filter @zooloo/web-app icons` gera `public/icons/`; a troca pelos vetores definitivos acontece só em `scripts/provisional-mark.ts` e `src/ui/brand/ZoolooLogo.tsx`.
 - Vitrine do design system em `/app/design` e PoC do banco local em `/app/dev/banco-local`, só em desenvolvimento e no build de E2E.
 - Banco local (ADR-0006): `src/data/local-db/`. SQLite WASM em Web Worker (`opfs-sahpool`), aba líder por Web Locks, demais abas pelo BroadcastChannel, Drizzle `sqlite-proxy` via `useLocalDb().orm`. Tabelas e migrações de `@zooloo/db-schema/local`. Arquivo cifrado (ADR-0008): SQLite3 Multiple Ciphers em `vendor/sqlite3mc/` (hash fixo, não editar), esquema SQLCipher 4, chave em `database-key.ts` guardada cifrada por `CryptoKey` não exportável no IndexedDB.
 - Service Worker (`src/sw.ts`, Serwist): precache do app shell, sem cache de `/api` (RNF-PWA-04).
-- Sync (ADR-0007): `src/data/sync/` — `LocalSyncStore` (réplica local, outbox `sync_outbox`, `sync_meta`) e `HttpSyncTransport`; motor de `@zooloo/sync-core`. PoC em `/app/dev/sync`.
+- Sync (ADR-0007): `src/data/sync/` — `LocalSyncStore` (réplica local, outbox `sync_outbox`, `sync_meta`) e `HttpSyncTransport`; motor de `@zooloo/sync-core`. `AppSyncProvider` (`SyncContext.tsx`) no topo do app: escrita local + outbox, ciclo ao abrir, ao voltar para a aba, a cada 30 s e ao voltar a rede, fase e pendências para o `SyncStatus` e aviso de mutações recusadas (`SyncNotice`). PoC em `/app/dev/sync`.
+- Categorias: `src/data/categories/` lê o banco local e grava pelo sync depois de validar com `@zooloo/domain`; tela em `src/app/pages/categories/`. Cor da categoria por atributo `data-category-color` com regras em `global.css` (a CSP proíbe estilo inline).
 - E2E: `pnpm --filter @zooloo/web-app test:e2e` (Playwright, build de produção com `--mode e2e`). Os testes de sync rodam contra a API da worktree quando existe `.env.worktree` (`pnpm dev:worktree up`); sem ele, são pulados.
 
 ## Banco de dados
@@ -68,3 +69,5 @@ Em dev e teste os pacotes são lidos de `src/` pela condição de export `@zoolo
 | `installments.ts` | RN-LAN-11: parcelas truncadas, resíduo na 1ª |
 | `card-invoice.ts` | RN-CRT-02, RN-CRT-03: fatura pela regra de fechamento |
 | `budget.ts` | RN-ORC-06, RN-ORC-08: indicadores do orçamento |
+| `category.ts` | RN-CAT-01, RN-CAT-03, RN-CAT-07: validação de criar e alterar categoria (tipo imutável, 2 níveis, "Outros" protegida, nome único por nível sem diferenciar maiúsculas) contra o estado atual; usada no web-app e no push do servidor |
+| `category-tree.ts` | RN-CAT-02, RF-CAT-05: arquivamento derivado da mãe, cascata de exclusão, árvore ordenada e reordenação entre irmãs |

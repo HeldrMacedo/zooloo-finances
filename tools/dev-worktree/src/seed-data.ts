@@ -54,15 +54,15 @@ function category(
 
 function categoriesFor(user: number): SeedCategory[] {
   return [
-    category(user, 1, 'expense', 'Alimentação', 'utensils', '#F47C3C'),
-    category(user, 2, 'expense', 'Mercado', 'shopping-cart', '#F47C3C', { parent: 1 }),
-    category(user, 3, 'expense', 'Restaurantes', 'chef-hat', '#F47C3C', { parent: 1 }),
-    category(user, 4, 'expense', 'Moradia', 'house', '#142B3B'),
-    category(user, 5, 'expense', 'Transporte', 'bus', '#16B89A'),
-    category(user, 6, 'expense', 'Saúde', 'heart-pulse', '#B91C1C'),
-    category(user, 7, 'expense', 'Lazer', 'party-popper', '#FFC857'),
+    category(user, 1, 'expense', 'Alimentação', 'utensils', '#AD4621'),
+    category(user, 2, 'expense', 'Mercado', 'shopping-cart', '#AD4621', { parent: 1 }),
+    category(user, 3, 'expense', 'Restaurantes', 'chef-hat', '#AD4621', { parent: 1 }),
+    category(user, 4, 'expense', 'Moradia', 'house', '#16324A'),
+    category(user, 5, 'expense', 'Transporte', 'bus', '#2D6E85'),
+    category(user, 6, 'expense', 'Saúde', 'heart-pulse', '#A83C64'),
+    category(user, 7, 'expense', 'Lazer', 'party-popper', '#8A5A00'),
     category(user, 8, 'expense', 'Outros', 'circle-ellipsis', '#5B6B77', { system: true }),
-    category(user, 9, 'income', 'Salário', 'briefcase', '#15803D'),
+    category(user, 9, 'income', 'Salário', 'briefcase', '#18744C'),
     category(user, 10, 'income', 'Outros', 'circle-ellipsis', '#5B6B77', { system: true }),
   ];
 }

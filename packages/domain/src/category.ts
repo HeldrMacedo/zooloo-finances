@@ -40,7 +40,7 @@ export type CategoryViolation =
 export const OTHER_CATEGORY = {
   name: 'Outros',
   icon: 'circle-ellipsis',
-  color: 'slate',
+  color: '#5B6B77',
 } as const;
 
 /** Chave de unicidade do nome (RN-CAT-07): sem diferenciar maiúsculas nem espaços extras. */

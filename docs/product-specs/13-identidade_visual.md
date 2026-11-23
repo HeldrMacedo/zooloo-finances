@@ -88,6 +88,24 @@ A cor da marca **não** representa entrada de dinheiro. Receita e despesa têm c
 
 Gráficos usam a sequência: Midnight, Teal, Soft Teal, Sun, Terracota, `#D6CCBC` no tema claro; Soft Teal, Teal-400, Ice, Sun, `#D9653B`, `#94A3B8` no escuro. Sempre com legenda textual.
 
+### 2.5 Cores de categoria [I]
+
+**Decisão** (23/11/2026, CRUD de categorias): a cor da categoria é escolhida numa paleta fixa. O valor gravado (e sincronizado) é o hex do tema claro; o tema escuro troca pelo par da mesma linha. A categoria aparece como um selo com o ícone dentro: ícone branco sobre a cor no tema claro e Midnight-900 sobre a cor no tema escuro. Cor gravada fora da paleta (dado antigo ou de outro cliente) é exibida como Ardósia.
+
+| Chave | Nome | Tema claro | Tema escuro | Ícone/selo (claro / escuro) | Selo/card (claro / escuro) |
+|---|---|---|---|---|---|
+| `teal` | Teal | `#2D6E85` | `#78A5B0` | 5,7 / 6,0 | 5,3 / 5,4 |
+| `midnight` | Midnight | `#16324A` | `#C7D8E2` | 13,2 / 11,1 | 12,4 / 9,9 |
+| `terracotta` | Terracota | `#AD4621` | `#EA8461` | 5,7 / 6,2 | 5,4 / 5,5 |
+| `green` | Verde | `#18744C` | `#80ED99` | 5,8 / 11,2 | 5,4 / 10,0 |
+| `amber` | Âmbar | `#8A5A00` | `#E59934` | 5,9 / 6,9 | 5,6 / 6,2 |
+| `purple` | Roxo | `#6B4C9A` | `#B9A2E0` | 6,7 / 7,2 | 6,3 / 6,5 |
+| `rose` | Rosa | `#A83C64` | `#E89AB5` | 6,0 / 7,5 | 5,6 / 6,7 |
+| `blue` | Azul | `#2F5FA8` | `#8FB3E8` | 6,3 / 7,6 | 5,9 / 6,8 |
+| `slate` | Ardósia | `#5B6B77` | `#94A3B8` | 5,5 / 6,3 | 5,2 / 5,7 |
+
+Regras: ícone sobre o selo ≥ 4,5:1 e selo sobre o card (Sand-50 / Midnight-800) ≥ 3:1 (elemento gráfico, WCAG 1.4.11), verificados por teste. A cor nunca é a única informação: o nome da categoria sempre acompanha. "Outros" nasce em Ardósia com o ícone `circle-ellipsis`.
+
 ## 3. Tipografia
 
 **Decisão** (18/11/2026): a prancha usa sans-serif geométrica, de formas abertas e peso forte nos títulos. As fontes escolhidas combinam esse tom amigável com a legibilidade de dados de uma fintech:
@@ -182,6 +200,17 @@ Os valores deste documento são a fonte do pacote `@zooloo/ui-tokens` (doc 09 §
     "text-muted-dark": "#94A3B8",
     "income": { "light": "#18744C", "dark": "#80ED99" },
     "expense": { "light": "#AD4621", "dark": "#EA8461" }
+  },
+  "category": {
+    "teal": { "light": "#2D6E85", "dark": "#78A5B0" },
+    "midnight": { "light": "#16324A", "dark": "#C7D8E2" },
+    "terracotta": { "light": "#AD4621", "dark": "#EA8461" },
+    "green": { "light": "#18744C", "dark": "#80ED99" },
+    "amber": { "light": "#8A5A00", "dark": "#E59934" },
+    "purple": { "light": "#6B4C9A", "dark": "#B9A2E0" },
+    "rose": { "light": "#A83C64", "dark": "#E89AB5" },
+    "blue": { "light": "#2F5FA8", "dark": "#8FB3E8" },
+    "slate": { "light": "#5B6B77", "dark": "#94A3B8" }
   },
   "radius": { "sm": 8, "md": 12, "lg": 16, "xl": 18 },
   "font": {

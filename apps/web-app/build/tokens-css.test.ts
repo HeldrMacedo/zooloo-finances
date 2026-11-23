@@ -1,4 +1,11 @@
-import { chartSequence, chartSequenceDark, darkTheme, lightTheme } from '@zooloo/ui-tokens';
+import {
+  categoryColor,
+  categoryIconColor,
+  chartSequence,
+  chartSequenceDark,
+  darkTheme,
+  lightTheme,
+} from '@zooloo/ui-tokens';
 import { describe, expect, it } from 'vitest';
 import { TOKENS_MODULE_ID, tokensCss, zoolooTokensPlugin } from './tokens-css.ts';
 
@@ -16,6 +23,13 @@ describe('tokensCss', () => {
   it('cores de gráfico por tema', () => {
     expect(css).toContain(`--zl-chart-1: ${chartSequence[0]};`);
     expect(css.split(`--zl-chart-1: ${chartSequenceDark[0]};`)).toHaveLength(3);
+  });
+
+  it('cores de categoria e do ícone por tema (doc 13 §2.5)', () => {
+    expect(css).toContain(`--zl-category-teal: ${categoryColor.teal.light};`);
+    expect(css.split(`--zl-category-teal: ${categoryColor.teal.dark};`)).toHaveLength(3);
+    expect(css).toContain(`--zl-category-icon: ${categoryIconColor.light};`);
+    expect(css.split(`--zl-category-icon: ${categoryIconColor.dark};`)).toHaveLength(3);
   });
 
   it('fontes, raios, escala e cores da marca', () => {

@@ -1,4 +1,6 @@
 import {
+  categoryColor,
+  categoryIconColor,
   chartSequence,
   chartSequenceDark,
   color,
@@ -34,8 +36,16 @@ export function tokensCss(): string {
   ].join('\n');
   const chart = (sequence: readonly string[]): string =>
     sequence.map((value, index) => `--zl-chart-${index + 1}: ${value};`).join('\n');
-  const light = `${themeToCssVariables(lightTheme)}\n${chart(chartSequence)}`;
-  const dark = `${themeToCssVariables(darkTheme)}\n${chart(chartSequenceDark)}`;
+  // Paleta de categorias (doc 13 §2.5): cada chave troca de valor com o tema.
+  const category = (theme: 'light' | 'dark'): string =>
+    [
+      ...Object.entries(categoryColor).map(
+        ([key, value]) => `--zl-category-${key}: ${value[theme]};`,
+      ),
+      `--zl-category-icon: ${categoryIconColor[theme]};`,
+    ].join('\n');
+  const light = `${themeToCssVariables(lightTheme)}\n${chart(chartSequence)}\n${category('light')}`;
+  const dark = `${themeToCssVariables(darkTheme)}\n${chart(chartSequenceDark)}\n${category('dark')}`;
   return [
     `:root {\n${indent(shared)}\n${indent(light)}\n  color-scheme: light;\n}`,
     `:root[data-theme='dark'] {\n${indent(dark)}\n  color-scheme: dark;\n}`,

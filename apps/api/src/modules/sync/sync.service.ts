@@ -20,19 +20,13 @@ import {
 } from '@zooloo/validation';
 import { LOGGER } from '../../config/tokens.js';
 import { DatabaseService, type Tx } from '../../providers/database/database.service.js';
+import { CategoryRules } from './category-rules.js';
+import { MutationRejected, type Rejection } from './mutation-rejected.js';
 import { type StoredRecord, SYNC_ENTITIES, SyncRepo } from './sync.repo.js';
-
-type Rejection = SyncPushResponse['rejected'][number];
 
 /** Códigos do PostgreSQL que viram recusa da mutação em vez de erro do lote. */
 const CONFLICT = '23505';
 const INVALID = new Set(['23503', '23502', '23514', '22P02', '22007', '22008']);
-
-class MutationRejected extends Error {
-  constructor(readonly reason: Rejection['reason']) {
-    super(reason);
-  }
-}
 
 function pgCode(error: unknown): string | undefined {
   for (let current: unknown = error; current instanceof Error; current = current.cause) {
@@ -71,6 +65,7 @@ export class SyncService {
   constructor(
     private readonly database: DatabaseService,
     private readonly repo: SyncRepo,
+    private readonly categories: CategoryRules,
     @Inject(LOGGER) private readonly logger: Logger,
   ) {}
 
@@ -191,7 +186,17 @@ export class SyncService {
       fields: record.fields,
       fieldHlc: record.clocks,
     };
+    const context = { userId, version, wallNow };
+    if (write.entity === 'categories') {
+      await this.categories.validate(tx, existing, write);
+    }
     await (existing ? this.repo.update(tx, write) : this.repo.insert(tx, write));
+    if (write.entity === 'categories' && changed.includes('deletedAt')) {
+      await this.categories.cascadeDelete(tx, write, context);
+    }
+    if (write.entity === 'profiles' && !existing && !write.fields['deletedAt']) {
+      await this.categories.seedProfile(tx, write, context);
+    }
   }
 
   private reasonFor(error: unknown): Rejection['reason'] {

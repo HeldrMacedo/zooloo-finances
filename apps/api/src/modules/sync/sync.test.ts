@@ -278,7 +278,10 @@ describe('mutações recusadas sem derrubar o lote', () => {
 describe('isolamento entre usuários (F7, IDOR)', () => {
   it('pull só traz registros do próprio usuário', async () => {
     const page = await pull(USER_B);
-    expect(page.changes.map((change) => change.id)).toEqual([PROFILE_B]);
+    expect(page.changes.map((change) => change.id)).toContain(PROFILE_B);
+    for (const change of page.changes) {
+      expect(change.entity === 'profiles' ? change.id : change.fields['profileId']).toBe(PROFILE_B);
+    }
   });
 
   it('não sobrescreve nem descobre registro de outro usuário pelo ID', async () => {
@@ -336,9 +339,13 @@ describe('paginação do pull', () => {
     await pushOk(userId, [0, 1, 2].map(category));
     await pushOk(userId, [3, 4].map(category));
 
-    // Limite 2: a versão com 3 categorias não cabe e vai inteira na página.
+    // Limite 2: o perfil nasce com as duas "Outros" na mesma versão, que não cabe e vai inteira.
     const first = await pull(userId, 0, 2);
-    expect(first.changes.map((change) => change.entity)).toEqual(['profiles']);
+    expect(first.changes.map((change) => change.entity).sort()).toEqual([
+      'categories',
+      'categories',
+      'profiles',
+    ]);
     expect(first.hasMore).toBe(true);
     const second = await pull(userId, first.version, 2);
     expect(second.changes).toHaveLength(3);

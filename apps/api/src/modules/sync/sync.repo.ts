@@ -148,6 +148,14 @@ export class SyncRepo {
     return row ? toRecord(entity, row) : null;
   }
 
+  /** Categorias do perfil, inclusive excluídas, para validar as regras com o estado atual. */
+  async categoriesOfProfile(tx: Tx, profileId: string): Promise<StoredRecord[]> {
+    const { rows } = await tx.execute<Row>(
+      sql`${selectFrom('categories')} where profile_id = ${profileId} for update`,
+    );
+    return rows.map((row) => toRecord('categories', row));
+  }
+
   async insert(tx: Tx, record: WriteRecord): Promise<void> {
     const { table, columns } = ENTITIES[record.entity];
     const specs = Object.entries(columns).filter(([name]) => name in record.fields);

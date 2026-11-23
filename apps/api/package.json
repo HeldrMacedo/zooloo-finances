@@ -20,6 +20,7 @@
     "@nestjs/platform-fastify": "12.5.1",
     "@nestjs/swagger": "12.1.2",
     "@zooloo/db-schema": "workspace:*",
+    "@zooloo/domain": "workspace:*",
     "@zooloo/security": "workspace:*",
     "@zooloo/sync-core": "workspace:*",
     "@zooloo/validation": "workspace:*",

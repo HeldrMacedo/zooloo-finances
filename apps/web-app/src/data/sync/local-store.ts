@@ -59,6 +59,17 @@ const META = { cursor: 'cursor', clock: 'clock', node: 'node' } as const;
 const maxHlc = (clocks: Readonly<Record<string, string>>): string =>
   Object.values(clocks).reduce((max, clock) => (compareHlc(clock, max) > 0 ? clock : max), '');
 
+/**
+ * Ordem segura para as FKs do banco local dentro de um lote do pull: perfis, depois categorias de
+ * primeiro nível, depois subcategorias (a mãe é sempre de primeiro nível, RN-CAT-01). O pull ordena
+ * por versão, e uma mãe editada depois da filha chega depois dela.
+ */
+function parentsFirst(changes: readonly MergedChange[]): MergedChange[] {
+  const rank = (change: MergedChange): number =>
+    change.entity === 'profiles' ? 0 : change.record.fields['parentId'] ? 2 : 1;
+  return [...changes].sort((a, b) => rank(a) - rank(b));
+}
+
 /** Nó do HLC: 16 dígitos hexadecimais aleatórios, gerados uma vez por banco local. */
 function randomNode(): string {
   return Array.from(crypto.getRandomValues(new Uint8Array(8)), (byte) =>
@@ -167,7 +178,7 @@ export class LocalSyncStore implements SyncStore {
   }
 
   async apply(changes: readonly MergedChange[], cursor: number): Promise<void> {
-    for (const change of changes) {
+    for (const change of parentsFirst(changes)) {
       await this.upsert(change.entity, change.id, change.record, change.version);
     }
     await this.setMeta(META.cursor, String(cursor));
@@ -177,10 +188,14 @@ export class LocalSyncStore implements SyncStore {
   async restore(entity: string, id: string, current: Change | null): Promise<void> {
     const table = tableOf(entity);
     if (current === null) {
+      // Criação recusada: some do banco local, levando as filhas criadas aqui sob ela (FK).
+      if (entity === 'categories') {
+        await this.db.delete(categories).where(eq(categories.parentId, id));
+      }
       await this.db.delete(table).where(eq(table.id, id));
       return;
     }
-    await this.db.delete(table).where(eq(table.id, id));
+    // Substitui pelo estado do servidor sem apagar a linha: filhas locais seguem válidas na FK.
     await this.upsert(
       entity,
       id,

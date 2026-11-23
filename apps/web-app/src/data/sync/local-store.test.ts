@@ -220,6 +220,58 @@ describe('LocalSyncStore (banco local como réplica)', () => {
     expect(await categoryName(db, created)).toBeUndefined();
   });
 
+  it('filha que chega antes da mãe no mesmo lote do pull respeita a FK', async () => {
+    const [profile, parent] = seed();
+    const child = {
+      ...parent!,
+      id: '01960000-0000-7000-8132-000000000000',
+      fields: { ...parent!.fields, name: 'Cinema', parentId: CATEGORY },
+    };
+    // Mãe editada depois da filha: versão maior, chega depois no pull.
+    const server = new FakeServer([profile!, child, { ...parent!, version: 2 }]);
+    const { db, engine } = await device(server, { now: 1_000 });
+    await engine.sync();
+    expect((await categoryName(db, child.id))?.parentId).toBe(CATEGORY);
+  });
+
+  it('recusa em mãe com filha local: volta ao estado do servidor sem quebrar a FK', async () => {
+    const server = new FakeServer(seed());
+    const { db, store, engine } = await device(server, { now: 1_000 });
+    await engine.sync();
+    const child = '01960000-0000-7000-8133-000000000000';
+    await store.write('categories', child, {
+      ...seed()[1]!.fields,
+      name: 'Cinema',
+      parentId: CATEGORY,
+    });
+    server.rejectNames.add('Recusada');
+    await store.write('categories', CATEGORY, { name: 'Recusada' });
+    const report = await engine.sync();
+    expect(report.rejected).toHaveLength(1);
+    expect((await categoryName(db))?.name).toBe('Lazer');
+    expect((await categoryName(db, child))?.parentId).toBe(CATEGORY);
+  });
+
+  it('criação recusada leva junto as filhas criadas sob ela no aparelho', async () => {
+    const server = new FakeServer(seed());
+    const { db, store, engine } = await device(server, { now: 1_000 });
+    await engine.sync();
+    const parent = '01960000-0000-7000-8134-000000000000';
+    const child = '01960000-0000-7000-8135-000000000000';
+    server.rejectNames.add('Recusada');
+    server.rejectNames.add('Filha');
+    await store.write('categories', parent, { ...seed()[1]!.fields, name: 'Recusada' });
+    await store.write('categories', child, {
+      ...seed()[1]!.fields,
+      name: 'Filha',
+      parentId: parent,
+    });
+    const report = await engine.sync();
+    expect(report.rejected).toHaveLength(2);
+    expect(await categoryName(db, parent)).toBeUndefined();
+    expect(await categoryName(db, child)).toBeUndefined();
+  });
+
   it('nó e relógio persistem: reabrir continua depois do último HLC', async () => {
     const server = new FakeServer(seed());
     const wall = { now: 5_000 };

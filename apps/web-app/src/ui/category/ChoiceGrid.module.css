@@ -36,6 +36,10 @@
   height: 2.25rem;
   border: 1px solid var(--zl-border);
   border-radius: var(--zl-radius-sm);
+}
+
+/* Fundo da amostra de cor vem de `[data-category-color]` (global.css): sem `background` aqui. */
+.icon {
   background: var(--zl-surface);
 }
 

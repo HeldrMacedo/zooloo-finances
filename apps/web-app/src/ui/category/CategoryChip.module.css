@@ -5,7 +5,7 @@
   width: 2.25rem;
   height: 2.25rem;
   border-radius: 999px;
-  background: var(--zl-category-slate);
+  /* Fundo por `[data-category-color]` (global.css), que empataria em especificidade com esta classe. */
   color: var(--zl-category-icon);
 }
 

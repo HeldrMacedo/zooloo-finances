@@ -41,3 +41,7 @@
   font-weight: 600;
   color: var(--zl-expense);
 }
+
+select.input {
+  padding-right: var(--zl-space-8);
+}

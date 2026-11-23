@@ -1,4 +1,6 @@
+import type { ReactElement } from 'react';
 import type { RouteObject } from 'react-router';
+import { CategoriesPage } from './pages/categories/CategoriesPage.js';
 import { ComingSoonPage } from './pages/ComingSoonPage.js';
 import { DesignSystemPage } from './pages/DesignSystemPage.js';
 import { LocalDbPocPage } from './pages/LocalDbPocPage.js';
@@ -10,10 +12,11 @@ import { NAV_ITEMS, SECONDARY_NAV_ITEMS } from './shell/Sidebar.js';
 
 /** Rotas do app sob `/app/`. Cada tela do menu troca o `ComingSoonPage` quando for construída. */
 export function appRoutes(options: { readonly withDesignSystem: boolean }): RouteObject[] {
+  const built: Readonly<Record<string, ReactElement>> = { '/categorias': <CategoriesPage /> };
   const screens = [...NAV_ITEMS, ...SECONDARY_NAV_ITEMS].map(({ to, label }) =>
     to === '/'
       ? { index: true, element: <SummaryPage /> }
-      : { path: to.slice(1), element: <ComingSoonPage title={label} /> },
+      : { path: to.slice(1), element: built[to] ?? <ComingSoonPage title={label} /> },
   );
   return [
     {

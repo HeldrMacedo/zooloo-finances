@@ -4,6 +4,7 @@ import { Amount } from '../../ui/amount/Amount.js';
 import { Button } from '../../ui/button/Button.js';
 import { Card } from '../../ui/card/Card.js';
 import { TextField } from '../../ui/field/TextField.js';
+import { DesignCategoryShowcase } from './DesignCategoryShowcase.js';
 import pages from './pages.module.css';
 import styles from './DesignSystemPage.module.css';
 
@@ -96,6 +97,8 @@ export function DesignSystemPage() {
           />
         </div>
       </Card>
+
+      <DesignCategoryShowcase />
     </div>
   );
 }

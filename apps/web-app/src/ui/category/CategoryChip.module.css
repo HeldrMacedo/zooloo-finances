@@ -1,0 +1,15 @@
+.chip {
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 999px;
+  background: var(--zl-category-slate);
+  color: var(--zl-category-icon);
+}
+
+.sm {
+  width: 1.75rem;
+  height: 1.75rem;
+}

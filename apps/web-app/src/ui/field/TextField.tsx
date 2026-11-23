@@ -4,9 +4,9 @@ import styles from './TextField.module.css';
 export interface TextFieldProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'id'> {
   readonly label: string;
   /** Orientação curta, sempre visível (não depende de placeholder). */
-  readonly hint?: string;
+  readonly hint?: string | undefined;
   /** Mensagem que explica o problema e como corrigir. */
-  readonly error?: string;
+  readonly error?: string | undefined;
   /** Rótulo só para leitor de tela, quando o contexto visual já basta (ex.: busca na topbar). */
   readonly hideLabel?: boolean;
   readonly ref?: Ref<HTMLInputElement>;

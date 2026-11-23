@@ -106,3 +106,40 @@ a {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Cor de categoria por chave da paleta (doc 13 §2.5); o valor de cada variável troca com o tema. */
+[data-category-color='teal'] {
+  background: var(--zl-category-teal);
+}
+
+[data-category-color='midnight'] {
+  background: var(--zl-category-midnight);
+}
+
+[data-category-color='terracotta'] {
+  background: var(--zl-category-terracotta);
+}
+
+[data-category-color='green'] {
+  background: var(--zl-category-green);
+}
+
+[data-category-color='amber'] {
+  background: var(--zl-category-amber);
+}
+
+[data-category-color='purple'] {
+  background: var(--zl-category-purple);
+}
+
+[data-category-color='rose'] {
+  background: var(--zl-category-rose);
+}
+
+[data-category-color='blue'] {
+  background: var(--zl-category-blue);
+}
+
+[data-category-color='slate'] {
+  background: var(--zl-category-slate);
+}

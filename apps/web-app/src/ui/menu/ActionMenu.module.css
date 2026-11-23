@@ -1,0 +1,61 @@
+.wrapper {
+  position: relative;
+}
+
+.trigger {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border: 0;
+  border-radius: var(--zl-radius-sm);
+  background: transparent;
+  cursor: pointer;
+}
+
+.trigger:hover,
+.trigger[aria-expanded='true'] {
+  background: var(--zl-hover);
+}
+
+.menu {
+  position: absolute;
+  z-index: 20;
+  top: calc(100% + 0.25rem);
+  right: 0;
+  display: grid;
+  min-width: 12rem;
+  padding: var(--zl-space-1);
+  border: 1px solid var(--zl-border);
+  border-radius: var(--zl-radius-md);
+  background: var(--zl-surface);
+  box-shadow: var(--zl-shadow-elevated);
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: var(--zl-space-2);
+  width: 100%;
+  min-height: 2.25rem;
+  padding: 0 var(--zl-space-3);
+  border: 0;
+  border-radius: var(--zl-radius-sm);
+  background: transparent;
+  font-size: var(--zl-text-sm);
+  text-align: left;
+  cursor: pointer;
+}
+
+.item:hover,
+.item:focus-visible {
+  background: var(--zl-hover);
+}
+
+.item:focus-visible {
+  outline-offset: -2px;
+}
+
+.danger {
+  color: var(--zl-expense);
+}
